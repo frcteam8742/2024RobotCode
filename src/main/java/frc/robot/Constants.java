@@ -20,9 +20,12 @@ public final class Constants {
     public static class Operator {
         public static final int RightFlightStickControllerPort = 0;
         public static final int LeftFlightStickControllerPort = 0;
+        public static final int OperatorControllerPort = 0;
     }
 
     public static class CANIDS {
+        public static final int TopIntakeMotor = 0;
+        public static final int BottomIntakeMotor = 0;
     }
 
     public static class DriveTrain {
@@ -32,5 +35,12 @@ public final class Constants {
         public static final int RightMotor2 = 0;
 
     }
+
+    public static class Intake {
+        public static final double IntakeOffsetMultiplicative = 0.95;
+        public static final double TriggerDeadZone = 0.2;
+    }
+
+
 
 }

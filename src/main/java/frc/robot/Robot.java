@@ -10,10 +10,13 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 //Commands
 import frc.robot.commands.DriveTrainTeleopCommand;
+import frc.robot.commands.IntakeTeleopCommand;
 //Subsystems
 import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 //HIDS
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,11 +32,14 @@ public class Robot extends TimedRobot {
     // HIDS
     Joystick _LeftDriveFlightJoystick = new Joystick(Constants.Operator.LeftFlightStickControllerPort);
     Joystick _RightDriveFlightJoystick = new Joystick(Constants.Operator.RightFlightStickControllerPort);
+    XboxController _OperatorController = new XboxController(Constants.Operator.OperatorControllerPort);
     // Subsystems
     DriveTrainSubsystem _DriveTrainSubsystem = new DriveTrainSubsystem();
+    IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
     // Commands
     DriveTrainTeleopCommand _DriveTrainTeleopCommand = new DriveTrainTeleopCommand(_DriveTrainSubsystem,
             _LeftDriveFlightJoystick, _RightDriveFlightJoystick);
+    IntakeTeleopCommand _IntakeTeleopCommand = new IntakeTeleopCommand(_IntakeSubsystem, _OperatorController);
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -99,6 +105,7 @@ public class Robot extends TimedRobot {
         // teleop starts running.
 
         _DriveTrainTeleopCommand.schedule();
+        _IntakeTeleopCommand.schedule();
 
     }
 
