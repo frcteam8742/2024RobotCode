@@ -9,14 +9,21 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants;
 
-public class DriveTrainCommand extends Command {
-  /** Creates a new DriveTrainCommand. */
-  
-    private Joystick _rightDriveJoystick = new Joystick(Constants.Operator.RightDriverController);
-    private Joystick _leftDriveJoystick = new Joystick(Constants.Operator.LeftDriverController);
+public class DriveTrainTeleopCommand extends Command {
 
-    public DriveTrainCommand() {
+    /** Creates a new DriveTrainCommand. */
+    private final DriveTrainSubsystem _Drive;
+
+    private Joystick _rightDriveJoystick;
+    private Joystick _leftDriveJoystick;
+
+    public DriveTrainTeleopCommand(DriveTrainSubsystem drive, Joystick ljoystick, Joystick rjoystick) {
         // Use addRequirements() here to declare subsystem dependencies.
+        _Drive = drive;
+        _leftDriveJoystick = ljoystick;
+        _rightDriveJoystick = rjoystick;
+        addRequirements(_Drive);
+
     }
 
     // Called when the command is initially scheduled.
@@ -27,6 +34,8 @@ public class DriveTrainCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        _Drive.setRightPower(_rightDriveJoystick.getY());
+        _Drive.setLeftPower(_leftDriveJoystick.getY());
     }
 
     // Called once the command ends or is interrupted.
