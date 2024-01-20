@@ -11,9 +11,11 @@ import frc.robot.Constants;
 //Commands
 import frc.robot.commands.DriveTrainTeleopCommand;
 import frc.robot.commands.IntakeTeleopCommand;
+import frc.robot.commands.ShooterTeleopCommand;
 //Subsystems
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 //HIDS
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -36,10 +38,12 @@ public class Robot extends TimedRobot {
     // Subsystems
     DriveTrainSubsystem _DriveTrainSubsystem = new DriveTrainSubsystem();
     IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
+    ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
     // Commands
     DriveTrainTeleopCommand _DriveTrainTeleopCommand = new DriveTrainTeleopCommand(_DriveTrainSubsystem,
             _LeftDriveFlightJoystick, _RightDriveFlightJoystick);
     IntakeTeleopCommand _IntakeTeleopCommand = new IntakeTeleopCommand(_IntakeSubsystem, _OperatorController);
+    ShooterTeleopCommand _ShooterTeleopCommand = new ShooterTeleopCommand(_ShooterSubsystem, _OperatorController);
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -106,6 +110,7 @@ public class Robot extends TimedRobot {
 
         _DriveTrainTeleopCommand.schedule();
         _IntakeTeleopCommand.schedule();
+        _ShooterTeleopCommand.schedule();
 
     }
 

@@ -26,6 +26,8 @@ public final class Constants {
     public static class CANIDS {
         public static final int TopIntakeMotor = 0;
         public static final int BottomIntakeMotor = 0;
+        public static final int TopShooterMotor = 0;
+        public static final int BottomShooterMotor = 0;
     }
 
     public static class DriveTrain {
@@ -39,6 +41,10 @@ public final class Constants {
     public static class Intake {
         public static final double IntakeOffsetMultiplicative = 0.95;
         public static final double TriggerDeadZone = 0.2;
+    }
+    public static class Shooter {
+         public static final double LowPower = 0.4;
+         public static final double HighPower = 0.7;
     }
 
 
