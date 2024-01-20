@@ -29,6 +29,8 @@ public class DriveTrainTeleopCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        _Drive.setRightPower(0);
+        _Drive.setLeftPower(0);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -41,6 +43,8 @@ public class DriveTrainTeleopCommand extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        _Drive.setRightPower(0);
+        _Drive.setLeftPower(0);
     }
 
     // Returns true when the command should end.

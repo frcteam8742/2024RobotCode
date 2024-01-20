@@ -24,6 +24,7 @@ public class IntakeTeleopCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        _Intake.off();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -47,6 +48,7 @@ public class IntakeTeleopCommand extends Command {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        _Intake.off();
     }
 
     // Returns true when the command should end.
