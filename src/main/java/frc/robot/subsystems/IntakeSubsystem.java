@@ -6,12 +6,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-// import com.revrobotics.CANSparkMAX;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import com.revrobotics.*;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private PWMSparkMax _TopIntakeMotor = new PWMSparkMax(Constants.CANIDS.TopIntakeMotor);
-    private PWMSparkMax _BottomIntakeMotor = new PWMSparkMax(Constants.CANIDS.BottomIntakeMotor);
+    private CANSparkMax _TopIntakeMotor = new CANSparkMax(Constants.CANIDS.TopIntakeMotor, MotorType.kBrushless);
+    private CANSparkMax _BottomIntakeMotor = new CANSparkMax(Constants.CANIDS.BottomIntakeMotor, MotorType.kBrushless);
     private double _Power = 0;
 
     /** Creates a new IntakeSubsystem. */

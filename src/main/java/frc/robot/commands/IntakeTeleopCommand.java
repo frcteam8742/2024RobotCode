@@ -30,8 +30,11 @@ public class IntakeTeleopCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        // sets the Xbox triggers to variables Right and Left
         double Right = _Xbox.getRightTriggerAxis();
         double Left = _Xbox.getLeftTriggerAxis();
+        // Creates a buffer zone so that the operator does not accidently press the
+        // triggers and the wheels start moving. The right motor is dominant
         if (Right < Constants.Intake.TriggerDeadZone) {
             Right = 0;
         }

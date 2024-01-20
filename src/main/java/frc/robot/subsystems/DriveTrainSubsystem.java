@@ -20,6 +20,7 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private double _leftPower = 0;
 
     public DriveTrainSubsystem() {
+        //sets the motors on each side
         _leftDrive1.addFollower(_leftDrive2);
         _rightDrive1.addFollower(_rightDrive2);
     }
