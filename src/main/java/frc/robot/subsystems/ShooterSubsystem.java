@@ -13,6 +13,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private CANSparkMax _TopShooterMotor = new CANSparkMax(Constants.CANIDS.TopShooterMotor, MotorType.kBrushless);
     private CANSparkMax _BottomShooterMotor = new CANSparkMax(Constants.CANIDS.BottomShooterMotor, MotorType.kBrushless);
     private double _Power = 0;
+    private 
 
     /** Creates a new ShooterSubsystem. */
     public ShooterSubsystem() {

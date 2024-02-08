@@ -41,10 +41,10 @@ public class IntakeTeleopCommand extends Command {
         if (Left < Constants.Intake.TriggerDeadZone) {
             Left = 0;
         }
-        if (Right >= Left) {
-            _Intake.on(Right);
+        else if (Left >= Right) {
+            _Intake.on(Left);
         } else {
-            _Intake.reverse(Left);
+            _Intake.reverse(Right);
         }
     }
 

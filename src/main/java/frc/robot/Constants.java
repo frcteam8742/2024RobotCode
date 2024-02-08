@@ -28,14 +28,23 @@ public final class Constants {
         public static final int BottomIntakeMotor = 0;
         public static final int TopShooterMotor = 0;
         public static final int BottomShooterMotor = 0;
+        public static final int IndexerMotor = 0;
+    }
+
+    public static class Sensors {
+        public static final int RightDriveEncoder = 0;
+        public static final int LeftDriveEncoder = 0;
     }
 
     public static class DriveTrain {
+        //left
         public static final int LeftMotor1 = 0;
         public static final int LeftMotor2 = 0;
+        public static final int LeftRelativeEncoder = 0;
+        //right
         public static final int RightMotor1 = 0;
         public static final int RightMotor2 = 0;
-
+        public static final int RightRelativeEncoder = 0;
     }
 
     public static class Intake {
@@ -43,9 +52,13 @@ public final class Constants {
         public static final double TriggerDeadZone = 0.2;
     }
     public static class Shooter {
-         public static final double LowPower = 0.4;
+         public static final double LowPower = 0.2;
          public static final double HighPower = 0.7;
     }
+    public static class Indexer {
+        public static final double IndexerSpeed = 0.8;
+    }
+    
 
 
 

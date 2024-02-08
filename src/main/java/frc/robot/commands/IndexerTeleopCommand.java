@@ -5,47 +5,50 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.Constants;
 
-public class ShooterTeleopCommand extends Command {
-    /** Creates a new ShooterTeleopCommand. */
-    private final ShooterSubsystem _Shooter;
+public class IndexerTeleopCommand extends Command {
+    private final IndexerSubsystem _Index;
     private XboxController _Xbox;
+    private boolean _IndexerButtonPressed;
+    private boolean _ReverseButtonPressed;
 
-    public ShooterTeleopCommand(ShooterSubsystem shooter, XboxController xbox) {
+    /** Creates a new IndexerTeleopSubsystem. */
+    public IndexerTeleopCommand(IndexerSubsystem index, XboxController xbox) {
         // Use addRequirements() here to declare subsystem dependencies.
-        _Shooter = shooter;
+        _Index = index;
         _Xbox = xbox;
-        addRequirements(_Shooter);
+        addRequirements(_Index);
+
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        _Shooter.off();
+        _Index.off();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (_Xbox.getYButton()) {
-            _Shooter.high();
-        } else { //else if (_Xbox.getBButton()) 
-            _Shooter.low();
+        _IndexerButtonPressed = _Xbox.getRightBumper();
+        _ReverseButtonPressed = _Xbox.getLeftBumper();
+
+        if (_IndexerButtonPressed == true) {
+            _Index.fire(Constants.Indexer.IndexerSpeed);
+        } else if (_ReverseButtonPressed == true) {
+            _Index.reverse(Constants.Indexer.IndexerSpeed);
+        } else {
+            _Index.off();
         }
-        // if need be, make above statement if (B button pressed) and make another mode
-        // for on if motors are getting too hot on low
-        // } else {
-        // _Shooter.on();
-        // }
+
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        _Shooter.off();
     }
 
     // Returns true when the command should end.
