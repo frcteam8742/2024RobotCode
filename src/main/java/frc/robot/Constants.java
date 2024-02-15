@@ -58,7 +58,7 @@ public final class Constants {
          public static final double HighSpeed = -1;
     }
     public static class Indexer {
-        public static final double IndexerSpeed = 0.8;
+        public static final double IndexerSpeed = 0.4;
     }
     
 

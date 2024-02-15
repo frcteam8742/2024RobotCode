@@ -5,8 +5,6 @@
 package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
