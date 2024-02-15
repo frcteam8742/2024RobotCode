@@ -35,17 +35,27 @@ public class IntakeTeleopCommand extends Command {
         double Left = _Xbox.getLeftTriggerAxis();
         // Creates a buffer zone so that the operator does not accidently press the
         // triggers and the wheels start moving. The right motor is dominant
+
         if (Right < Constants.Intake.TriggerDeadZone) {
             Right = 0;
         }
         if (Left < Constants.Intake.TriggerDeadZone) {
             Left = 0;
         }
-        else if (Left >= Right) {
+        if (Right == 0 && Left == 0) {
+            _Intake.off();
+        } else if (Left >= Right) {
             _Intake.on(Left);
         } else {
             _Intake.reverse(Right);
         }
+
+        // if (_Xbox.getAButton()) {
+        // _Intake.on(.6);
+        // } else {
+        // _Intake.off();
+        // }
+
     }
 
     // Called once the command ends or is interrupted.

@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -15,6 +14,7 @@ public class ShooterTeleopCommand extends Command {
     private XboxController _Xbox;
 
     public ShooterTeleopCommand(ShooterSubsystem shooter, XboxController xbox) {
+        
         // Use addRequirements() here to declare subsystem dependencies.
         _Shooter = shooter;
         _Xbox = xbox;
@@ -32,10 +32,27 @@ public class ShooterTeleopCommand extends Command {
     public void execute() {
         if (_Xbox.getYButton()) {
             _Shooter.high();
-        } else { //else if (_Xbox.getBButton()) 
+        } else if (_Xbox.getXButton()) { //else if (_Xbox.getBButton()) 
             _Shooter.low();
+        } else {
+            _Shooter.off();
         }
-        // if need be, make above statement if (B button pressed) and make another mode
+
+
+
+        //test code
+        // if (_Xbox.getXButtonPressed()){
+        //     _Shooter.high();
+        //     System.out.print("_Xbox.getXButton was pressed\n");
+        //  } else if (_Xbox.getXButtonReleased()){
+        //     System.out.print("Xbox button is released\n");
+        //     _Shooter.off();
+        // }
+        
+
+
+
+        //  if need be, make above statement if (B button pressed) and make another mode
         // for on if motors are getting too hot on low
         // } else {
         // _Shooter.on();

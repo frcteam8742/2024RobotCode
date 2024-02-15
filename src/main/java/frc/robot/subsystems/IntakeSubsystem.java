@@ -21,7 +21,8 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        _BottomIntakeMotor.set(_Power);
+
+        _BottomIntakeMotor.set(-_Power);
         _TopIntakeMotor.set(-Constants.Intake.IntakeOffsetMultiplicative*_Power);
     }
     public void off() {

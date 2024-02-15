@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
     Joystick _LeftDriveFlightJoystick = new Joystick(Constants.Operator.LeftFlightStickControllerPort);
     Joystick _RightDriveFlightJoystick = new Joystick(Constants.Operator.RightFlightStickControllerPort);
     XboxController _OperatorController = new XboxController(Constants.Operator.OperatorControllerPort);
+    XboxController _TempDriverController = new XboxController(5);
     // Subsystems
     DriveTrainSubsystem _DriveTrainSubsystem = new DriveTrainSubsystem();
     IndexerSubsystem _IndexerSubsystem = new IndexerSubsystem();
@@ -39,14 +40,14 @@ public class Robot extends TimedRobot {
     ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
     // Teleop Commands
     DriveTrainTeleopCommand _DriveTrainTeleopCommand = new DriveTrainTeleopCommand(_DriveTrainSubsystem,
-            _LeftDriveFlightJoystick, _RightDriveFlightJoystick);
+            _LeftDriveFlightJoystick, _RightDriveFlightJoystick, _TempDriverController);
     IndexerTeleopCommand _IndexerTeleopCommand = new IndexerTeleopCommand(_IndexerSubsystem, _OperatorController);
     IntakeTeleopCommand _IntakeTeleopCommand = new IntakeTeleopCommand(_IntakeSubsystem, _OperatorController);
-    ShooterTeleopCommand _ShooterTeleopCommand = new ShooterTeleopCommand(_ShooterSubsystem, _OperatorController);
+    ShooterTeleopCommand _ShooterTeleopCommand = new ShooterTeleopCommand(_ShooterSubsystem, _TempDriverController);
 
     // Auto Commands
-    AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem);
-    AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
+    // AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem);
+    // AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
 
     enum AutoChooser {
         AUTO_EXAMPLE,
@@ -106,17 +107,17 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
 
-        switch (_AutoChooserState) {
-            case AUTO_EXAMPLE:
-                _AutoExample.schedule();
-                break;
-            case AUTO_DRIVE_FORWARD:
-                _AutoDriveForward.schedule();
-                break;
-            default:
-                _AutoDriveForward.schedule();
-                break;
-        }
+        // switch (_AutoChooserState) {
+        //     case AUTO_EXAMPLE:
+        //         _AutoExample.schedule();
+        //         break;
+        //     case AUTO_DRIVE_FORWARD:
+        //         _AutoDriveForward.schedule();
+        //         break;
+        //     default:
+        //         _AutoDriveForward.schedule();
+        //         break;
+        // }
     }
 
     /** This function is called periodically during autonomous. */
@@ -128,16 +129,17 @@ public class Robot extends TimedRobot {
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
         // teleop starts running.
-        if (_AutoExample.isScheduled()) {
-            _AutoExample.cancel();
-        }
-        if (_AutoDriveForward.isScheduled()) {
-            _AutoDriveForward.cancel();
-        }
+        // if (_AutoExample.isScheduled()) {
+        //     _AutoExample.cancel();
+        // }
+        // if (_AutoDriveForward.isScheduled()) {
+        //     _AutoDriveForward.cancel();
+        // }
         _DriveTrainTeleopCommand.schedule();
         _IndexerTeleopCommand.schedule();
         _IntakeTeleopCommand.schedule();
         _ShooterTeleopCommand.schedule();
+        
 
     }
 
