@@ -30,6 +30,8 @@ public class NetworkTables {
 
     private ShooterSubsystem _Shooter;
 
+    
+
     NetworkTables(ShooterSubsystem shooter) {
         _Shooter = shooter;
     }

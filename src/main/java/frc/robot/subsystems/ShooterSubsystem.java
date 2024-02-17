@@ -37,11 +37,11 @@ public class ShooterSubsystem extends SubsystemBase {
         _BottomEncoder = _BottomShooterMotor.getEncoder();
 
         //Initializing PID
-        // TP = 0.5;
-        // TI = 0;
-        // TD = 0;
-        // TIZ = 0;
-        // TFF = 0;
+        TP = 0.5;
+        TI = 0;
+        TD = 0;
+        TIZ = 0;
+        TFF = 0;
 
         // BP = 0.05;
         // BI = 0;
