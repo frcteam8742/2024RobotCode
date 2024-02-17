@@ -7,7 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
+// import edu.wpi.first.wpilibj.XboxController;
 
 public class DriveTrainTeleopCommand extends Command {
 
@@ -16,12 +16,14 @@ public class DriveTrainTeleopCommand extends Command {
 
     private Joystick _rightDriveJoystick;
     private Joystick _leftDriveJoystick;
+    // private XboxController _tempDriverController;
 
     public DriveTrainTeleopCommand(DriveTrainSubsystem drive, Joystick ljoystick, Joystick rjoystick) {
         // Use addRequirements() here to declare subsystem dependencies.
         _Drive = drive;
         _leftDriveJoystick = ljoystick;
         _rightDriveJoystick = rjoystick;
+        // _tempDriverController = tXboxController;
         addRequirements(_Drive);
 
     }
@@ -38,10 +40,10 @@ public class DriveTrainTeleopCommand extends Command {
     @Override
     public void execute() {
         //the right and left Flight Sticks tie to the right and left drive motors respectively
-        // _Drive.setRightPower(_rightDriveJoystick.getY());
-        // _Drive.setLeftPower(_leftDriveJoystick.getY());
-        _Drive.setRightPower(_rightDriveJoystick.getY()/1.5);
-        _Drive.setLeftPower(_leftDriveJoystick.getY()/1.5);
+        _Drive.setRightPower(_rightDriveJoystick.getY());
+        _Drive.setLeftPower(_leftDriveJoystick.getY());
+        // _Drive.setRightPower(_tempDriverController.getRightY()/1.5);
+        // _Drive.setLeftPower(-_tempDriverController.getLeftY()/1.5);
 
     }
 
