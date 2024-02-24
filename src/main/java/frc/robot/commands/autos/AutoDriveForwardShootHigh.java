@@ -7,13 +7,29 @@ package frc.robot.commands.autos;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.DriveTrainAutoCommand;
-import frc.robot.subsystems.DriveTrainSubsystem;
+import frc.robot.subsystems.*;
+import frc.robot.Constants;
+import frc.robot.commands.*;
 
 public class AutoDriveForwardShootHigh extends SequentialCommandGroup{
   /** Creates a new AutoDriveForwardShootHigh. */
-  public AutoDriveForwardShootHigh() {
+
+  private DriveTrainSubsystem _DriveTrainSubsystem;
+  private ShooterSubsystem _ShooterSubsystem;
+
+  public AutoDriveForwardShootHigh(DriveTrainSubsystem drive_Subsystem, ShooterSubsystem shooter_Subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    _DriveTrainSubsystem = drive_Subsystem;
+    _ShooterSubsystem = shooter_Subsystem;
+    DriveTrainAutoCommand backwards = new DriveTrainAutoCommand(drive_Subsystem);
+    ShooterAutoCommand shootHigh = new ShooterAutoCommand(shooter_Subsystem);
+    backwards.setPower(-.25, -.25);
+    backwards.setPower(0, 0);
+    shootHigh.setPower(Constants.Shooter.HighSpeed);
+
+    addCommands(
+      
+    )
   }
 
 }

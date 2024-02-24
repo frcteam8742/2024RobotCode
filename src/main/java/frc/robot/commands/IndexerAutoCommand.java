@@ -5,23 +5,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Devices.GyroSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 
-public class GyroCommand extends Command {
-  /** Creates a new Gyro. */
-  private final GyroSubsystem _Gyro;
-
-  public GyroCommand(GyroSubsystem gyro) {
+public class IndexerAutoCommand extends Command {
+  /** Creates a new IndexerAutoCommand. */
+  private final IndexerSubsystem _Indexer;
+  public IndexerAutoCommand(IndexerSubsystem indexer) {
     // Use addRequirements() here to declare subsystem dependencies.
-    _Gyro = gyro;
-    addRequirements(_Gyro);
+  
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    _Gyro.reset();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

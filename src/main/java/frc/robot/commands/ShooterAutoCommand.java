@@ -5,31 +5,40 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Devices.GyroSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
-public class GyroCommand extends Command {
-  /** Creates a new Gyro. */
-  private final GyroSubsystem _Gyro;
-
-  public GyroCommand(GyroSubsystem gyro) {
+public class ShooterAutoCommand extends Command {
+  /** Creates a new ShooterAutoCommand. */
+  private final ShooterSubsystem _Shooter;
+  public ShooterAutoCommand(ShooterSubsystem shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
-    _Gyro = gyro;
-    addRequirements(_Gyro);
+  _Shooter = shooter;
+  addRequirements(_Shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    _Gyro.reset();
+  _Shooter.off();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {}
 
+  public void setShooterPID(double PIDSpeed){
+    //create
+  }
+
+  public void setPower(double power){
+    _Shooter.autoPower(power);
+  }
+
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    _Shooter.off();
+  }
 
   // Returns true when the command should end.
   @Override

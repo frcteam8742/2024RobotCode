@@ -19,8 +19,8 @@ package frc.robot;
 public final class Constants {
     public static class Operator {
         public static final int RightFlightStickControllerPort = 1;
-        public static final int LeftFlightStickControllerPort = 2;
-        public static final int OperatorControllerPort = 0;
+        public static final int LeftFlightStickControllerPort = 0;
+        public static final int OperatorControllerPort = 5;
     }
 
     public static class CANIDS {
@@ -54,11 +54,11 @@ public final class Constants {
         public static final double TriggerDeadZone = 0.2;
     }
     public static class Shooter {
-         public static final double LowSpeed = -.2;
+         public static final double LowSpeed = -.4;
          public static final double HighSpeed = -1;
     }
     public static class Indexer {
-        public static final double IndexerSpeed = 0.4;
+        public static final double IndexerSpeed = 0.15;
     }
     
 

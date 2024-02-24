@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.*;
+import frc.robot.subsystems.Devices.*;
 
 public class NetworkTables {
 
@@ -9,12 +10,14 @@ public class NetworkTables {
     // Standard robot network tables
     NetworkTable table = inst.getTable("datatable");
 
+    //Top Shooter PID
     public NetworkTableEntry _TopShooterP = table.getEntry("TSP");
     public NetworkTableEntry _TopShooterI = table.getEntry("TSI");
     public NetworkTableEntry _TopShooterD = table.getEntry("TSD");
     public NetworkTableEntry _TopShooterIz = table.getEntry("TSIz");
     public NetworkTableEntry _TopShooterFF = table.getEntry("TSFF");
 
+    // // Bottom Shooter PID
     // public NetworkTableEntry _BottomShooterP = table.getDoubleTopic("BSP").subscribe(0.0);
     // public NetworkTableEntry _BottomShooterI = table.getDoubleTopic("BSI").subscribe(0.0);
     // public NetworkTableEntry _BottomShooterD = table.getDoubleTopic("BSD").subscribe(0.0);
@@ -29,11 +32,12 @@ public class NetworkTables {
     public NetworkTableEntry _BottomShooterOutput = table.getEntry("BottomShooterOutput");
 
     private ShooterSubsystem _Shooter;
-
+    private GyroSubsystem _Gyro;
     
 
-    NetworkTables(ShooterSubsystem shooter) {
+    NetworkTables(ShooterSubsystem shooter, GyroSubsystem gyro) {
         _Shooter = shooter;
+        _Gyro = gyro;
     }
 
     public void periodic() {

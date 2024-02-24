@@ -87,6 +87,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     }
 
+    public void autoPower(double power) {
+        _BottomShooterMotor.set(power);
+    }
+
     public void low() {
         // System.out.println("Low Set");
         _BottomShooterMotor.set(Constants.Shooter.LowSpeed);

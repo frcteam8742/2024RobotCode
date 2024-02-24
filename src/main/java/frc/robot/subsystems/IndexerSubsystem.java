@@ -21,6 +21,14 @@ public class IndexerSubsystem extends SubsystemBase {
         _IndexerMotor.set(_Power);
     }
 
+    public void autoPower(double power){
+        _IndexerMotor.set(power);
+    }
+
+    public void PIDSpeed(){
+
+    }
+
     public void off() {
         _Power = 0;
     }
