@@ -44,18 +44,18 @@ public class NetworkTables {
     private ShooterSubsystem _Shooter;
     private GyroSubsystem _Gyro;
 
-    NetworkTables(ShooterSubsystem shooter, GyroSubsystem gyro) {
+    public NetworkTables(ShooterSubsystem shooter, GyroSubsystem gyro) {
         _Shooter = shooter;
         _Gyro = gyro;
     }
 
     public void periodic() {
 
-        _Shooter.TP = _TopShooterP.getDouble(0);
-        _Shooter.TI = _TopShooterI.getDouble(0);
-        _Shooter.TD = _TopShooterD.getDouble(0);
-        _Shooter.TIZ = _TopShooterIz.getDouble(0);
-        _Shooter.TFF = _TopShooterFF.getDouble(0);
+        // _Shooter.TP = _TopShooterP.getDouble(0);
+        // _Shooter.TI = _TopShooterI.getDouble(0);
+        // _Shooter.TD = _TopShooterD.getDouble(0);
+        // _Shooter.TIZ = _TopShooterIz.getDouble(0);
+        // _Shooter.TFF = _TopShooterFF.getDouble(0);
 
         // _Shooter.BP = _BottomShooterP.get();
         // _Shooter.BI = _BottomShooterI.get();
@@ -63,11 +63,11 @@ public class NetworkTables {
         // _Shooter.BIZ = _BottomShooterIz.get();
         // _Shooter.BFF = _BottomShooterFF.get();
 
-        _TopShooterVel.setDouble(_Shooter._TopEncoder.getVelocity());
-        _BottomShooterVel.setDouble(_Shooter._BottomEncoder.getVelocity());
+        // _TopShooterVel.setDouble(_Shooter._TopEncoder.getVelocity());
+        // _BottomShooterVel.setDouble(_Shooter._BottomEncoder.getVelocity());
 
-        _TopShooterOutput.setDouble(_Shooter._TopShooterMotor.get());
-        _BottomShooterOutput.setDouble(_Shooter._BottomShooterMotor.get());
+        // _TopShooterOutput.setDouble(_Shooter._TopShooterMotor.get());
+        // _BottomShooterOutput.setDouble(_Shooter._BottomShooterMotor.get());
 
         _GyroAngleX.setDouble(_Gyro.getX());
         _GyroAngleY.setDouble(_Gyro.getY());

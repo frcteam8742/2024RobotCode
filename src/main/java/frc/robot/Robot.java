@@ -11,6 +11,7 @@ import frc.robot.Constants;
 
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Devices.GyroSubsystem;
 import frc.robot.commands.autos.*;
 
 //HIDS
@@ -46,10 +47,14 @@ public class Robot extends TimedRobot {
     ShooterTeleopCommand _ShooterTeleopCommand = new ShooterTeleopCommand(_ShooterSubsystem, _OperatorController);
 
     // Auto Commands
-    AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem);
-    AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
-    AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
-            _ShooterSubsystem, _IndexerSubsystem);
+    // AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem);
+    // AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
+    // AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
+    //         _ShooterSubsystem, _IndexerSubsystem);
+
+        GyroSubsystem _gyro = new GyroSubsystem();
+
+    NetworkTables _table = new NetworkTables(_ShooterSubsystem, _gyro);
 
     enum AutoChooser {
         AUTO_EXAMPLE,
@@ -69,7 +74,6 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer. This will perform all our button bindings,
         // and put our
         // autonomous chooser on the dashboard.
-
     }
 
     /**
@@ -92,6 +96,7 @@ public class Robot extends TimedRobot {
         // robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
+        _table.periodic();
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
@@ -110,19 +115,19 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
 
-        switch (_AutoChooserState) {
-            case AUTO_EXAMPLE:
-                _AutoExample.schedule();
-                break;
-            case AUTO_DRIVE_FORWARD:
-                _AutoDriveForward.schedule();
-                break;
-            case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
-                _AutoDriveForwardShootHigh.schedule();
-            default:
-                _AutoDriveForward.schedule();
-                break;
-        }
+        // switch (_AutoChooserState) {
+        //     case AUTO_EXAMPLE:
+        //         _AutoExample.schedule();
+        //         break;
+        //     case AUTO_DRIVE_FORWARD:
+        //         _AutoDriveForward.schedule();
+        //         break;
+        //     case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
+        //         _AutoDriveForwardShootHigh.schedule();
+        //     default:
+        //         _AutoDriveForward.schedule();
+        //         break;
+        // }
     }
 
     /** This function is called periodically during autonomous. */

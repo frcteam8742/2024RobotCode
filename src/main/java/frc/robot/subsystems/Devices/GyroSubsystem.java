@@ -20,9 +20,9 @@ public class GyroSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        Gyro_x = imu.getXComplementaryAngle();
-        Gyro_y = imu.getYComplementaryAngle();
-        Gyro_z = imu.getAngle(null);
+        Gyro_x = imu.getAngle(imu.getRollAxis());
+        Gyro_y = imu.getAngle(imu.getYawAxis());
+        Gyro_z = imu.getAngle(imu.getPitchAxis());
     }
 
     public double getX() {
