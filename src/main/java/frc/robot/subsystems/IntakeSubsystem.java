@@ -6,26 +6,23 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import com.revrobotics.*;
-import com.revrobotics.CANSparkLowLevel.*;
+// import com.revrobotics.CANSparkMAX;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private CANSparkMax _TopIntakeMotor = new CANSparkMax(Constants.CANIDS.TopIntakeMotor, MotorType.kBrushless);
-    private CANSparkMax _BottomIntakeMotor = new CANSparkMax(Constants.CANIDS.BottomIntakeMotor, MotorType.kBrushless);
+    private PWMSparkMax _TopIntakeMotor = new PWMSparkMax(Constants.CANIDS.TopIntakeMotor);
+    private PWMSparkMax _BottomIntakeMotor = new PWMSparkMax(Constants.CANIDS.BottomIntakeMotor);
     private double _Power = 0;
 
     /** Creates a new IntakeSubsystem. */
-    public IntakeSubsystem() {
-    }
+    public IntakeSubsystem() {}
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-
-        _BottomIntakeMotor.set(-_Power);
-        _TopIntakeMotor.set(-Constants.Intake.IntakeOffsetMultiplicative * _Power);
+        _BottomIntakeMotor.set(_Power);
+        _TopIntakeMotor.set(-Constants.Intake.IntakeOffsetMultiplicative*_Power);
     }
-
     public void off() {
         _Power = 0;
     }
@@ -37,5 +34,5 @@ public class IntakeSubsystem extends SubsystemBase {
     public void reverse(double Power) {
         _Power = -Power;
     }
-
+        
 }

@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterTeleopCommand extends Command {
@@ -14,7 +16,6 @@ public class ShooterTeleopCommand extends Command {
     private XboxController _Xbox;
 
     public ShooterTeleopCommand(ShooterSubsystem shooter, XboxController xbox) {
-        
         // Use addRequirements() here to declare subsystem dependencies.
         _Shooter = shooter;
         _Xbox = xbox;
@@ -30,10 +31,10 @@ public class ShooterTeleopCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (_Xbox.getYButton()) {
-            _Shooter.high();
-        } else if (_Xbox.getXButton()) { //else if (_Xbox.getBButton()) 
+        if (_Xbox.getXButton()) {
             _Shooter.low();
+        } else if (_Xbox.getYButton()) {
+            _Shooter.high();
         } else {
             _Shooter.off();
         }
