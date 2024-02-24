@@ -40,7 +40,7 @@ public class IndexerTeleopCommand extends Command {
         _ReverseButtonPressed = _Xbox.getLeftBumper();
 
         if (_IndexerButtonPressed == true) {
-            _Index.fire(Constants.Indexer.IndexerSpeed);
+            _Index.forward(Constants.Indexer.IndexerSpeed);
         } else if (_ReverseButtonPressed == true) {
             _Index.reverse(Constants.Indexer.IndexerSpeed);
         } else {

@@ -39,7 +39,7 @@ public class AutoDriveForwardShootHigh extends SequentialCommandGroup {
 
         addCommands(
                 new ParallelCommandGroup(
-                        shootHigh.withTimeout(3),
+                        shootHigh,
                         forward).withTimeout(2),
                 new ParallelCommandGroup(
                         stop,

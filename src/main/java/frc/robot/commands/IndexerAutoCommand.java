@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.IndexerSubsystem;
 
 public class IndexerAutoCommand extends Command {
@@ -21,7 +22,7 @@ public class IndexerAutoCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        _Indexer.off();
+        _Indexer.forward(Constants.Indexer.IndexerSpeed);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

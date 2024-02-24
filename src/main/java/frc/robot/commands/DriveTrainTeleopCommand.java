@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
+//if we ever have to switch back to the Xbox Controllers for whatever reason, it still exists as a comment
 // import edu.wpi.first.wpilibj.XboxController;
 
 public class DriveTrainTeleopCommand extends Command {

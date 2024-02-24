@@ -22,7 +22,8 @@ public class IndexerSubsystem extends SubsystemBase {
     }
 
     public void autoPower(double power) {
-        _IndexerMotor.set(power);
+        _Power = power;
+        _IndexerMotor.set(_Power);
     }
 
     public void PIDSpeed() {
@@ -33,7 +34,7 @@ public class IndexerSubsystem extends SubsystemBase {
         _Power = 0;
     }
 
-    public void fire(double Power) {
+    public void forward(double Power) {
         _Power = Power;
     }
 

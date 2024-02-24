@@ -37,26 +37,6 @@ public class ShooterTeleopCommand extends Command {
         } else {
             _Shooter.off();
         }
-
-
-
-        //test code
-        // if (_Xbox.getXButtonPressed()){
-        //     _Shooter.high();
-        //     System.out.print("_Xbox.getXButton was pressed\n");
-        //  } else if (_Xbox.getXButtonReleased()){
-        //     System.out.print("Xbox button is released\n");
-        //     _Shooter.off();
-        // }
-        
-
-
-
-        //  if need be, make above statement if (B button pressed) and make another mode
-        // for on if motors are getting too hot on low
-        // } else {
-        // _Shooter.on();
-        // }
     }
 
     // Called once the command ends or is interrupted.

@@ -20,7 +20,7 @@ public class ShooterAutoCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        _Shooter.off();
+        _Shooter.high();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
