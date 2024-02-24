@@ -6,25 +6,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
-//if we ever have to switch back to the Xbox Controllers for whatever reason, it still exists as a comment
-// import edu.wpi.first.wpilibj.XboxController;
 
-public class DriveTrainTeleopCommand extends Command {
+public class DriveTrainAutoCommand extends Command {
 
     /** Creates a new DriveTrainCommand. */
     private final DriveTrainSubsystem _Drive;
 
-    private Joystick _rightDriveJoystick;
-    private Joystick _leftDriveJoystick;
-    // private XboxController _tempDriverController;
-
-    public DriveTrainTeleopCommand(DriveTrainSubsystem drive, Joystick ljoystick, Joystick rjoystick) {
+    public DriveTrainAutoCommand(DriveTrainSubsystem drive) {
         // Use addRequirements() here to declare subsystem dependencies.
         _Drive = drive;
-        _leftDriveJoystick = ljoystick;
-        _rightDriveJoystick = rjoystick;
-        // _tempDriverController = tXboxController;
         addRequirements(_Drive);
 
     }
@@ -42,11 +32,17 @@ public class DriveTrainTeleopCommand extends Command {
     public void execute() {
         // the right and left Flight Sticks tie to the right and left drive motors
         // respectively
-        _Drive.setRightPower(-1*_rightDriveJoystick.getY());
-        _Drive.setLeftPower(-1*_leftDriveJoystick.getY());
-        // _Drive.setRightPower(_tempDriverController.getRightY()/1.5);
-        // _Drive.setLeftPower(-_tempDriverController.getLeftY()/1.5);
+    }
 
+    public void setDrivePID(double PIDSpeedR, double PIDSpeedL) {
+        _Drive.setRightSpeed(PIDSpeedR);
+        _Drive.setLeftSpeed(PIDSpeedL);
+
+    }
+
+    public void setPower(double rSpeed, double lSpeed) {
+        _Drive.setRightPower(rSpeed);
+        _Drive.setLeftPower(lSpeed);
     }
 
     // Called once the command ends or is interrupted.

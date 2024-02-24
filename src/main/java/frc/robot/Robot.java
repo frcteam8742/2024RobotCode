@@ -8,14 +8,11 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
-//Commands
-import frc.robot.commands.DriveTrainTeleopCommand;
-import frc.robot.commands.IntakeTeleopCommand;
-import frc.robot.commands.ShooterTeleopCommand;
-//Subsystems
-import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+import frc.robot.commands.autos.*;
+
 //HIDS
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -35,15 +32,32 @@ public class Robot extends TimedRobot {
     Joystick _LeftDriveFlightJoystick = new Joystick(Constants.Operator.LeftFlightStickControllerPort);
     Joystick _RightDriveFlightJoystick = new Joystick(Constants.Operator.RightFlightStickControllerPort);
     XboxController _OperatorController = new XboxController(Constants.Operator.OperatorControllerPort);
+
     // Subsystems
     DriveTrainSubsystem _DriveTrainSubsystem = new DriveTrainSubsystem();
+    IndexerSubsystem _IndexerSubsystem = new IndexerSubsystem();
     IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
     ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
-    // Commands
+    // Teleop Commands
     DriveTrainTeleopCommand _DriveTrainTeleopCommand = new DriveTrainTeleopCommand(_DriveTrainSubsystem,
             _LeftDriveFlightJoystick, _RightDriveFlightJoystick);
+    IndexerTeleopCommand _IndexerTeleopCommand = new IndexerTeleopCommand(_IndexerSubsystem, _OperatorController);
     IntakeTeleopCommand _IntakeTeleopCommand = new IntakeTeleopCommand(_IntakeSubsystem, _OperatorController);
     ShooterTeleopCommand _ShooterTeleopCommand = new ShooterTeleopCommand(_ShooterSubsystem, _OperatorController);
+
+    // Auto Commands
+    AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem);
+    AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
+    AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
+            _ShooterSubsystem, _IndexerSubsystem);
+
+    enum AutoChooser {
+        AUTO_EXAMPLE,
+        AUTO_DRIVE_FORWARD,
+        AUTO_DRIVE_FORWARD_SHOOT_HIGH
+    }
+
+    AutoChooser _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -96,6 +110,19 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
 
+        switch (_AutoChooserState) {
+            case AUTO_EXAMPLE:
+                _AutoExample.schedule();
+                break;
+            case AUTO_DRIVE_FORWARD:
+                _AutoDriveForward.schedule();
+                break;
+            case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
+                _AutoDriveForwardShootHigh.schedule();
+            default:
+                _AutoDriveForward.schedule();
+                break;
+        }
     }
 
     /** This function is called periodically during autonomous. */
@@ -109,6 +136,7 @@ public class Robot extends TimedRobot {
         // teleop starts running.
 
         _DriveTrainTeleopCommand.schedule();
+        _IndexerTeleopCommand.schedule();
         _IntakeTeleopCommand.schedule();
         _ShooterTeleopCommand.schedule();
 

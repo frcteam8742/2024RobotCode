@@ -5,38 +5,35 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShooterTeleopCommand extends Command {
-    /** Creates a new ShooterTeleopCommand. */
+public class ShooterAutoCommand extends Command {
+    /** Creates a new ShooterAutoCommand. */
     private final ShooterSubsystem _Shooter;
-    private XboxController _Xbox;
 
-    public ShooterTeleopCommand(ShooterSubsystem shooter, XboxController xbox) {
-        
+    public ShooterAutoCommand(ShooterSubsystem shooter) {
         // Use addRequirements() here to declare subsystem dependencies.
         _Shooter = shooter;
-        _Xbox = xbox;
         addRequirements(_Shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        _Shooter.off();
+        _Shooter.high();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (_Xbox.getYButton()) {
-            _Shooter.high();
-        } else if (_Xbox.getXButton()) { //else if (_Xbox.getBButton()) 
-            _Shooter.low();
-        } else {
-            _Shooter.off();
-        }
+    }
+
+    public void setShooterPID(double PIDSpeed) {
+        // create
+    }
+
+    public void setPower(double power) {
+        _Shooter.autoPower(power);
     }
 
     // Called once the command ends or is interrupted.

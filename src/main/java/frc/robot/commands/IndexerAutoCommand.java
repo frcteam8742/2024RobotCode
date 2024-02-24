@@ -5,44 +5,42 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.Constants;
+import frc.robot.subsystems.IndexerSubsystem;
 
-public class ShooterTeleopCommand extends Command {
-    /** Creates a new ShooterTeleopCommand. */
-    private final ShooterSubsystem _Shooter;
-    private XboxController _Xbox;
+public class IndexerAutoCommand extends Command {
+    /** Creates a new IndexerAutoCommand. */
+    private final IndexerSubsystem _Indexer;
 
-    public ShooterTeleopCommand(ShooterSubsystem shooter, XboxController xbox) {
-        
+    public IndexerAutoCommand(IndexerSubsystem Indexer) {
         // Use addRequirements() here to declare subsystem dependencies.
-        _Shooter = shooter;
-        _Xbox = xbox;
-        addRequirements(_Shooter);
+        _Indexer = Indexer;
+        addRequirements(_Indexer);
+
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        _Shooter.off();
+        _Indexer.forward(Constants.Indexer.IndexerSpeed);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (_Xbox.getYButton()) {
-            _Shooter.high();
-        } else if (_Xbox.getXButton()) { //else if (_Xbox.getBButton()) 
-            _Shooter.low();
-        } else {
-            _Shooter.off();
-        }
+    }
+
+    public void setIndexerPID() {
+
+    }
+
+    public void setPower(double power) {
+        _Indexer.autoPower(power);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        _Shooter.off();
     }
 
     // Returns true when the command should end.
