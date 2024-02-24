@@ -41,8 +41,8 @@ public class DriveTrainTeleopCommand extends Command {
     public void execute() {
         // the right and left Flight Sticks tie to the right and left drive motors
         // respectively
-        _Drive.setRightPower(_rightDriveJoystick.getY());
-        _Drive.setLeftPower(_leftDriveJoystick.getY());
+        _Drive.setRightPower(-1*_rightDriveJoystick.getY());
+        _Drive.setLeftPower(-1*_leftDriveJoystick.getY());
         // _Drive.setRightPower(_tempDriverController.getRightY()/1.5);
         // _Drive.setLeftPower(-_tempDriverController.getLeftY()/1.5);
 
