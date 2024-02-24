@@ -13,6 +13,7 @@ import frc.robot.subsystems.DriveTrainSubsystem;
 public class AutoDriveForward extends SequentialCommandGroup {
     /** Creates a new AutoLowNote. */
     DriveTrainSubsystem Drive;
+
     public AutoDriveForward(DriveTrainSubsystem drive) {
         // Use addRequirements() here to declare subsystem dependencies.
         Drive = drive;
@@ -23,10 +24,8 @@ public class AutoDriveForward extends SequentialCommandGroup {
         stop.setPower(0, 0);
 
         addCommands(
-            driveForward.withTimeout(10),
-            stop
-        );
-
+                driveForward.withTimeout(10),
+                stop);
 
     }
 }

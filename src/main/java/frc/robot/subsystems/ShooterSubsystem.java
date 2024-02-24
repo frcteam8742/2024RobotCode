@@ -23,12 +23,9 @@ public class ShooterSubsystem extends SubsystemBase {
     public double TP, TI, TD, TIZ, TFF, TMAX;
     // public double BP, BI, BD, BIZ, BFF, BMAX;
 
-
-
     /** Creates a new ShooterSubsystem. */
     public ShooterSubsystem() {
         _TopShooterMotor.follow(_BottomShooterMotor);
-
 
         _TopShooterPID = _TopShooterMotor.getPIDController();
         // _BottomShooterPID = _BottomShooterMotor.getPIDController();
@@ -36,7 +33,7 @@ public class ShooterSubsystem extends SubsystemBase {
         _TopEncoder = _TopShooterMotor.getEncoder();
         _BottomEncoder = _BottomShooterMotor.getEncoder();
 
-        //Initializing PID
+        // Initializing PID
         TP = 0.5;
         TI = 0;
         TD = 0;
@@ -55,29 +52,15 @@ public class ShooterSubsystem extends SubsystemBase {
         // This method will be called once per scheduler run
         // _BottomShooterMotor.set(_Power);
 
-        //PID Coefficitents
-        // TP = ;
-        // TI = ;
-        // TD = ;
-        // TIZ = ;
-        // TFF = ;
+        // Setting PID for Top
+        _TopShooterPID.setP(TP);
+        _TopShooterPID.setI(TI);
+        _TopShooterPID.setD(TD);
+        _TopShooterPID.setIZone(TIZ);
+        _TopShooterPID.setFF(TFF);
+        _TopShooterPID.setOutputRange(-1, 1);
 
-        // BP = ;
-        // BI = ;
-        // BD = ;
-        // BIZ = ;
-        // BFF = ;
-        
-        //Setting PID for Top
-        // _TopShooterPID.setP(TP);
-        // _TopShooterPID.setI(TI);
-        // _TopShooterPID.setD(TD);
-        // _TopShooterPID.setIZone(TIZ);
-        // _TopShooterPID.setFF(TFF);
-        // _TopShooterPID.setOutputRange(-1, 1);
-
-
-        //Setting PID for Bottom
+        // Setting PID for Bottom
         // _BottomShooterPID.setP(BP);
         // _BottomShooterPID.setI(BI);
         // _BottomShooterPID.setD(BD);
@@ -94,13 +77,15 @@ public class ShooterSubsystem extends SubsystemBase {
     public void low() {
         // System.out.println("Low Set");
         _BottomShooterMotor.set(Constants.Shooter.LowSpeed);
-        // _TopShooterPID.setReference(Constants.Shooter.LowSpeed, CANSparkMax.ControlType.kVelocity);
+        // _TopShooterPID.setReference(Constants.Shooter.LowSpeed,
+        // CANSparkMax.ControlType.kVelocity);
     }
 
     public void high() {
         // System.out.println("High Set");
         _BottomShooterMotor.set(Constants.Shooter.HighSpeed);
-        // _TopShooterPID.setReference(Constants.Shooter.HighSpeed, CANSparkMax.ControlType.kVelocity);
+        // _TopShooterPID.setReference(Constants.Shooter.HighSpeed,
+        // CANSparkMax.ControlType.kVelocity);
     }
 
     public void off() {

@@ -10,7 +10,7 @@ public class NetworkTables {
     // Standard robot network tables
     NetworkTable table = inst.getTable("datatable");
 
-    //Top Shooter PID
+    // Top Shooter PID
     public NetworkTableEntry _TopShooterP = table.getEntry("TSP");
     public NetworkTableEntry _TopShooterI = table.getEntry("TSI");
     public NetworkTableEntry _TopShooterD = table.getEntry("TSD");
@@ -18,11 +18,16 @@ public class NetworkTables {
     public NetworkTableEntry _TopShooterFF = table.getEntry("TSFF");
 
     // // Bottom Shooter PID
-    // public NetworkTableEntry _BottomShooterP = table.getDoubleTopic("BSP").subscribe(0.0);
-    // public NetworkTableEntry _BottomShooterI = table.getDoubleTopic("BSI").subscribe(0.0);
-    // public NetworkTableEntry _BottomShooterD = table.getDoubleTopic("BSD").subscribe(0.0);
-    // public NetworkTableEntry _BottomShooterIz = table.getDoubleTopic("BSIz").subscribe(0.0);
-    // public NetworkTableEntry _BottomShooterFF = table.getEntry("BSF").subscribe(0.0);
+    // public NetworkTableEntry _BottomShooterP =
+    // table.getDoubleTopic("BSP").subscribe(0.0);
+    // public NetworkTableEntry _BottomShooterI =
+    // table.getDoubleTopic("BSI").subscribe(0.0);
+    // public NetworkTableEntry _BottomShooterD =
+    // table.getDoubleTopic("BSD").subscribe(0.0);
+    // public NetworkTableEntry _BottomShooterIz =
+    // table.getDoubleTopic("BSIz").subscribe(0.0);
+    // public NetworkTableEntry _BottomShooterFF =
+    // table.getEntry("BSF").subscribe(0.0);
 
     // Shooter speed readout
     public NetworkTableEntry _TopShooterVel = table.getEntry("TopShooterVelocity");
@@ -31,9 +36,13 @@ public class NetworkTables {
     public NetworkTableEntry _TopShooterOutput = table.getEntry("TopShooterOutput");
     public NetworkTableEntry _BottomShooterOutput = table.getEntry("BottomShooterOutput");
 
+    // Gyro Readout
+    public NetworkTableEntry _GyroAngleX = table.getEntry("Gyro_x");
+    public NetworkTableEntry _GyroAngleY = table.getEntry("Gyro_y");
+    public NetworkTableEntry _GyroAngleZ = table.getEntry("Gyro_z");
+
     private ShooterSubsystem _Shooter;
     private GyroSubsystem _Gyro;
-    
 
     NetworkTables(ShooterSubsystem shooter, GyroSubsystem gyro) {
         _Shooter = shooter;
@@ -41,7 +50,7 @@ public class NetworkTables {
     }
 
     public void periodic() {
-        
+
         _Shooter.TP = _TopShooterP.getDouble(0);
         _Shooter.TI = _TopShooterI.getDouble(0);
         _Shooter.TD = _TopShooterD.getDouble(0);
@@ -59,6 +68,10 @@ public class NetworkTables {
 
         _TopShooterOutput.setDouble(_Shooter._TopShooterMotor.get());
         _BottomShooterOutput.setDouble(_Shooter._BottomShooterMotor.get());
+
+        _GyroAngleX.setDouble(_Gyro.imu.getXComplementaryAngle());
+        _GyroAngleY.setDouble(_Gyro.imu.getYComplementaryAngle());
+        _GyroAngleZ.setDouble(_Gyro.imu.getAngle(null));
 
     }
 }

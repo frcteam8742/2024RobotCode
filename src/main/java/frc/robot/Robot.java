@@ -48,10 +48,13 @@ public class Robot extends TimedRobot {
     // Auto Commands
     AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem);
     AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
+    AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
+            _ShooterSubsystem, _IndexerSubsystem);
 
     enum AutoChooser {
         AUTO_EXAMPLE,
-        AUTO_DRIVE_FORWARD
+        AUTO_DRIVE_FORWARD,
+        AUTO_DRIVE_FORWARD_SHOOT_HIGH
     }
 
     AutoChooser _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
@@ -114,6 +117,8 @@ public class Robot extends TimedRobot {
             case AUTO_DRIVE_FORWARD:
                 _AutoDriveForward.schedule();
                 break;
+            case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
+                _AutoDriveForwardShootHigh.schedule();
             default:
                 _AutoDriveForward.schedule();
                 break;
@@ -134,7 +139,6 @@ public class Robot extends TimedRobot {
         _IndexerTeleopCommand.schedule();
         _IntakeTeleopCommand.schedule();
         _ShooterTeleopCommand.schedule();
-        
 
     }
 

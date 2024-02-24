@@ -35,8 +35,8 @@ public class DriveTrainAutoCommand extends Command {
     }
 
     public void setDrivePID(double PIDSpeedR, double PIDSpeedL) {
-       _Drive.setRightSpeed(PIDSpeedR);
-       _Drive.setLeftSpeed(PIDSpeedL);
+        _Drive.setRightSpeed(PIDSpeedR);
+        _Drive.setLeftSpeed(PIDSpeedL);
 
     }
 

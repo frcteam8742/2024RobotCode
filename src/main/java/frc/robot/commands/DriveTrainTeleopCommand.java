@@ -31,7 +31,7 @@ public class DriveTrainTeleopCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        //initialize motors as off
+        // initialize motors as off
         _Drive.setRightPower(0);
         _Drive.setLeftPower(0);
     }
@@ -39,7 +39,8 @@ public class DriveTrainTeleopCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        //the right and left Flight Sticks tie to the right and left drive motors respectively
+        // the right and left Flight Sticks tie to the right and left drive motors
+        // respectively
         _Drive.setRightPower(_rightDriveJoystick.getY());
         _Drive.setLeftPower(_leftDriveJoystick.getY());
         // _Drive.setRightPower(_tempDriverController.getRightY()/1.5);

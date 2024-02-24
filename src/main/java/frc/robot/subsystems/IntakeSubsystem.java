@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.*;
@@ -16,15 +15,17 @@ public class IntakeSubsystem extends SubsystemBase {
     private double _Power = 0;
 
     /** Creates a new IntakeSubsystem. */
-    public IntakeSubsystem() {}
+    public IntakeSubsystem() {
+    }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
 
         _BottomIntakeMotor.set(-_Power);
-        _TopIntakeMotor.set(-Constants.Intake.IntakeOffsetMultiplicative*_Power);
+        _TopIntakeMotor.set(-Constants.Intake.IntakeOffsetMultiplicative * _Power);
     }
+
     public void off() {
         _Power = 0;
     }
@@ -36,5 +37,5 @@ public class IntakeSubsystem extends SubsystemBase {
     public void reverse(double Power) {
         _Power = -Power;
     }
-        
+
 }

@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.ADIS16470_IMU;
 
 public class GyroSubsystem extends SubsystemBase {
     /** Creates a new Gyro. */
-    private ADIS16470_IMU imu = new ADIS16470_IMU();
+    public ADIS16470_IMU imu = new ADIS16470_IMU();
     private double Gyro_x = 0.0;
     private double Gyro_y = 0.0;
     private double Gyro_z = 0.0;
@@ -24,6 +24,7 @@ public class GyroSubsystem extends SubsystemBase {
         Gyro_y = imu.getYComplementaryAngle();
         Gyro_z = imu.getAngle(null);
     }
+
     public void reset() {
         imu.reset();
     }

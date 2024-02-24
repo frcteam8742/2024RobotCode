@@ -39,11 +39,11 @@ public final class Constants {
     }
 
     public static class DriveTrain {
-        //left
+        // left
         public static final int LeftMotor1 = 9;
         public static final int LeftMotor2 = 8;
         public static final int LeftRelativeEncoder = 0;
-        //right
+        // right
         public static final int RightMotor1 = 7;
         public static final int RightMotor2 = 6;
         public static final int RightRelativeEncoder = 0;
@@ -53,15 +53,14 @@ public final class Constants {
         public static final double IntakeOffsetMultiplicative = 0.95;
         public static final double TriggerDeadZone = 0.2;
     }
+
     public static class Shooter {
-         public static final double LowSpeed = -.4;
-         public static final double HighSpeed = -1;
+        public static final double LowSpeed = -.4;
+        public static final double HighSpeed = -1;
     }
+
     public static class Indexer {
         public static final double IndexerSpeed = 0.15;
     }
-    
-
-
 
 }

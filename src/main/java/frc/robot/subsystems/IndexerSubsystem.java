@@ -5,7 +5,7 @@ import frc.robot.Constants;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-public class IndexerSubsystem extends SubsystemBase {    
+public class IndexerSubsystem extends SubsystemBase {
 
     private double _Power = 0;
     private CANSparkMax _IndexerMotor = new CANSparkMax(Constants.CANIDS.IndexerMotor, MotorType.kBrushless);
@@ -21,11 +21,11 @@ public class IndexerSubsystem extends SubsystemBase {
         _IndexerMotor.set(_Power);
     }
 
-    public void autoPower(double power){
+    public void autoPower(double power) {
         _IndexerMotor.set(power);
     }
 
-    public void PIDSpeed(){
+    public void PIDSpeed() {
 
     }
 
