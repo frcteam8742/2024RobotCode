@@ -69,9 +69,9 @@ public class NetworkTables {
         _TopShooterOutput.setDouble(_Shooter._TopShooterMotor.get());
         _BottomShooterOutput.setDouble(_Shooter._BottomShooterMotor.get());
 
-        _GyroAngleX.setDouble(_Gyro.imu.getXComplementaryAngle());
-        _GyroAngleY.setDouble(_Gyro.imu.getYComplementaryAngle());
-        _GyroAngleZ.setDouble(_Gyro.imu.getAngle(null));
+        _GyroAngleX.setDouble(_Gyro.getX());
+        _GyroAngleY.setDouble(_Gyro.getY());
+        _GyroAngleZ.setDouble(_Gyro.getZ());
 
     }
 }
