@@ -23,6 +23,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//Sensors
+import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +36,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
+
+
+    //Sensors
+    DigitalInput _BeamBreakSensor = new DigitalInput(Constants.Sensors.BeamBreakLimitSwitch);
 
     // HIDS
     Joystick _LeftDriveFlightJoystick = new Joystick(Constants.Operator.LeftFlightStickControllerPort);
@@ -69,6 +75,7 @@ public class Robot extends TimedRobot {
     // Standard robot network tables
     NetworkTable table = inst.getTable("datatable");
     private NetworkTableEntry _AutoChoice = table.getEntry("AutoChoice");
+
 
     enum AutoChooser {
         AUTO_EXAMPLE,
@@ -166,6 +173,7 @@ public class Robot extends TimedRobot {
                 _AutoDriveForward.schedule();
                 break;
         }
+        System.out.println(AutoChoice);
 
         _GyroSubsystem.reset();
     }
@@ -212,6 +220,11 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+        if (_BeamBreakSensor.get()){
+            _IndexerTeleopCommand.disableLow();
+        } else {
+            _IndexerTeleopCommand.enableLow();
+        }
     }
 
     @Override

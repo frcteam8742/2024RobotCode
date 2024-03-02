@@ -17,6 +17,7 @@ public class IndexerTeleopCommand extends Command {
     private XboxController _Xbox;
     private boolean _IndexerButtonPressed;
     private boolean _ReverseButtonPressed;
+    private boolean _LowDisable;
 
     /** Creates a new IndexerTeleopSubsystem. */
     public IndexerTeleopCommand(IndexerSubsystem index, XboxController xbox) {
@@ -39,14 +40,35 @@ public class IndexerTeleopCommand extends Command {
         _IndexerButtonPressed = _Xbox.getRightBumper();
         _ReverseButtonPressed = _Xbox.getLeftBumper();
 
-        if (_IndexerButtonPressed == true) {
-            _Index.forward(Constants.Indexer.IndexerSpeed);
-        } else if (_ReverseButtonPressed == true) {
-            _Index.reverse(Constants.Indexer.IndexerSpeed);
+        if (_Xbox.getRightTriggerAxis() > Constants.Intake.TriggerDeadZone) {
+            if(!_LowDisable){
+                _Index.forward(Constants.Indexer.IndexerLowSpeed);
+            } else {
+                _Index.off();
+            }
+        } else if (_Xbox.getLeftTriggerAxis() > Constants.Intake.TriggerDeadZone) {
+            if(!_LowDisable){
+                _Index.reverse(Constants.Indexer.IndexerLowSpeed);
+            } else {
+                _Index.off();
+            }
         } else {
-            _Index.off();
+            if (_IndexerButtonPressed == true) {
+                _Index.forward(Constants.Indexer.IndexerSpeed);
+            } else if (_ReverseButtonPressed == true) {
+                _Index.reverse(Constants.Indexer.IndexerSpeed);
+            } else {
+                _Index.off();
+            }
         }
 
+    }
+
+    public void disableLow(){
+        _LowDisable = true;
+    }
+    public void enableLow(){
+        _LowDisable = false;
     }
 
     // Called once the command ends or is interrupted.

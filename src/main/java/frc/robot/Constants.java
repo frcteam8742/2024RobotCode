@@ -68,6 +68,7 @@ public final class Constants {
 
     public static class Indexer {
         public static final double IndexerSpeed = 1;
+        public static final double IndexerLowSpeed = .2;
     }
 
 }
