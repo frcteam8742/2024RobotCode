@@ -6,12 +6,10 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveTrainSubsystem;
-
 public class DriveTrainAutoCommand extends Command {
 
     /** Creates a new DriveTrainCommand. */
     private final DriveTrainSubsystem _Drive;
-
     public DriveTrainAutoCommand(DriveTrainSubsystem drive) {
         // Use addRequirements() here to declare subsystem dependencies.
         _Drive = drive;

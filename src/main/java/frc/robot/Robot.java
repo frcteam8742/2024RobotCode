@@ -9,14 +9,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.cameraserver.CameraServer;
+
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Devices.GyroSubsystem;
 import frc.robot.commands.autos.*;
-
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 //HIDS
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,27 +45,36 @@ public class Robot extends TimedRobot {
     IndexerSubsystem _IndexerSubsystem = new IndexerSubsystem();
     IntakeSubsystem _IntakeSubsystem = new IntakeSubsystem();
     ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
+    GyroSubsystem _GyroSubsystem = new GyroSubsystem();
+    HangerSubsystem _HangerSubsystem = new HangerSubsystem();
+
     // Teleop Commands
     DriveTrainTeleopCommand _DriveTrainTeleopCommand = new DriveTrainTeleopCommand(_DriveTrainSubsystem,
             _LeftDriveFlightJoystick, _RightDriveFlightJoystick);
     IndexerTeleopCommand _IndexerTeleopCommand = new IndexerTeleopCommand(_IndexerSubsystem, _OperatorController);
     IntakeTeleopCommand _IntakeTeleopCommand = new IntakeTeleopCommand(_IntakeSubsystem, _OperatorController);
     ShooterTeleopCommand _ShooterTeleopCommand = new ShooterTeleopCommand(_ShooterSubsystem, _OperatorController);
+    HangerTeleopCommand _HangerTeleopCommand = new HangerTeleopCommand(_HangerSubsystem, _OperatorController);
 
     // Auto Commands
-    // AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem);
-    // AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
-    // AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
-    //         _ShooterSubsystem, _IndexerSubsystem);
+    AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem, _GyroSubsystem);
+    AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
+    AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
+            _ShooterSubsystem, _IndexerSubsystem);
+    AutoDriveForwardDualNote _AutoDriveForwardDualNote = new AutoDriveForwardDualNote();
 
-        GyroSubsystem _gyro = new GyroSubsystem();
+    NetworkTables _networktables = new NetworkTables(_ShooterSubsystem, _GyroSubsystem);
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
-    NetworkTables _table = new NetworkTables(_ShooterSubsystem, _gyro);
+    // Standard robot network tables
+    NetworkTable table = inst.getTable("datatable");
+    private NetworkTableEntry _AutoChoice = table.getEntry("AutoChoice");
 
     enum AutoChooser {
         AUTO_EXAMPLE,
         AUTO_DRIVE_FORWARD,
-        AUTO_DRIVE_FORWARD_SHOOT_HIGH
+        AUTO_DRIVE_FORWARD_SHOOT_HIGH,
+        AUTO_DRIVE_FORWARD_DUAL_NOTE
     }
 
     AutoChooser _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
@@ -71,6 +86,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        // CameraServer.startAutomaticCapture();
         // Instantiate our RobotContainer. This will perform all our button bindings,
         // and put our
         // autonomous chooser on the dashboard.
@@ -96,7 +112,7 @@ public class Robot extends TimedRobot {
         // robot's periodic
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
-        _table.periodic();
+        // _networktables.periodic();
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
@@ -114,25 +130,70 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
+        String AutoChoice = _AutoChoice.getString("");
+        switch(AutoChoice){
+            case "Example":
+            _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
+            break;
+            case "DriveForward":
+            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
+            break;
+            case "OneNoteAuto":
+            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_SHOOT_HIGH;
+            break;
+            case "TwoNoteAuto":
+            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
+            break;
+            default:
+            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
+            break;
+        }
 
-        // switch (_AutoChooserState) {
-        //     case AUTO_EXAMPLE:
-        //         _AutoExample.schedule();
-        //         break;
-        //     case AUTO_DRIVE_FORWARD:
-        //         _AutoDriveForward.schedule();
-        //         break;
-        //     case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
-        //         _AutoDriveForwardShootHigh.schedule();
-        //     default:
-        //         _AutoDriveForward.schedule();
-        //         break;
-        // }
+        switch (_AutoChooserState) {
+            case AUTO_EXAMPLE:
+                _AutoExample.schedule();
+                break;
+            case AUTO_DRIVE_FORWARD:
+                _AutoDriveForward.schedule();
+                break;
+            case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
+                _AutoDriveForwardShootHigh.schedule();
+                break;
+            case AUTO_DRIVE_FORWARD_DUAL_NOTE:
+                _AutoDriveForwardDualNote.schedule();
+                break;
+            default:
+                _AutoDriveForward.schedule();
+                break;
+        }
+
+        _GyroSubsystem.reset();
     }
 
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
+    }
+
+    @Override
+    public void autonomousExit() {
+        switch (_AutoChooserState) {
+            case AUTO_EXAMPLE:
+                _AutoExample.cancel();
+                break;
+            case AUTO_DRIVE_FORWARD:
+                _AutoDriveForward.cancel();
+                break;
+            case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
+                _AutoDriveForwardShootHigh.cancel();
+                break;
+            case AUTO_DRIVE_FORWARD_DUAL_NOTE:
+                _AutoDriveForwardDualNote.cancel();
+                break;
+            default:
+                _AutoDriveForward.cancel();
+                break;
+        }
     }
 
     @Override
@@ -144,6 +205,7 @@ public class Robot extends TimedRobot {
         _IndexerTeleopCommand.schedule();
         _IntakeTeleopCommand.schedule();
         _ShooterTeleopCommand.schedule();
+        _HangerTeleopCommand.schedule();
 
     }
 

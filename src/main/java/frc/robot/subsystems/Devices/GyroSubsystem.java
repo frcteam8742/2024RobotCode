@@ -6,6 +6,7 @@ package frc.robot.subsystems.Devices;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GyroSubsystem extends SubsystemBase {
     /** Creates a new Gyro. */
@@ -20,9 +21,22 @@ public class GyroSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        Gyro_x = imu.getAngle(imu.getRollAxis());
-        Gyro_y = imu.getAngle(imu.getYawAxis());
-        Gyro_z = imu.getAngle(imu.getPitchAxis());
+
+        Gyro_x = imu.getXComplementaryAngle();
+        Gyro_y = imu.getYComplementaryAngle();
+
+
+
+        // This is the axis that we will use, will have to have it reset every time it
+        // does an action and every time it is switched to teleop because it goes over
+        // past 360. Should be able to (in the DriveTrainAutoCommand) set it to where it
+        // turns until this reaches 45, or whatever angle, reset the value, then do
+        // whatever it needs to
+        Gyro_z = imu.getAngle(imu.getRollAxis());
+
+        // SmartDashboard.putNumber("X axis (Roll)", Gyro_x);
+        // SmartDashboard.putNumber("Y axis (Pitch)", Gyro_y);
+        // SmartDashboard.putNumber("Z axis (Yaw)", Gyro_z);
     }
 
     public double getX() {
@@ -34,7 +48,11 @@ public class GyroSubsystem extends SubsystemBase {
     }
 
     public double getZ() {
-        return Gyro_z;
+        if(Gyro_z < 0) {
+        return 360 + (Gyro_z % 360);
+        } else {
+        return Gyro_z % 360;
+        }
     }
 
     public void reset() {

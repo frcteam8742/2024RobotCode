@@ -10,30 +10,32 @@ import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-
 public class HangerSubsystem extends SubsystemBase {
-  private final DoubleSolenoid _hangerSolenoid = new DoubleSolenoid(1, PneumaticsModuleType.CTREPCM, 1, 0);
+    private final DoubleSolenoid _hangerSolenoidA = new DoubleSolenoid(6, PneumaticsModuleType.CTREPCM, 5, 4);
+    private final DoubleSolenoid _hangerSolenoidB = new DoubleSolenoid(6, PneumaticsModuleType.CTREPCM, 7, 6);
+    private DoubleSolenoid.Value _val = DoubleSolenoid.Value.kOff;
 
+    /** Creates a new Hanger. */
+    public HangerSubsystem() {
 
-  /** Creates a new Hanger. */
-  public HangerSubsystem() {
- 
-  }
+    }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+        _hangerSolenoidA.set(_val);
+        _hangerSolenoidB.set(_val);
+    }
 
-  public void IndexExtend() {
-//   hangerSolenoid.set(DoubleSolenoid.Value.kForward);
-  } 
-  
-  public void IndexIdle() {
-//   hangerSolenoid.set(DoubleSolenoid.Value.kOff);
-  }
- 
-  public void IndexRetract() {
-//   hangerSolenoid.set(DoubleSolenoid.Value.kReverse);
-  }
+    public void IndexExtend() {
+        _val = DoubleSolenoid.Value.kReverse;
+    }
+
+    public void IndexIdle() {
+        _val = DoubleSolenoid.Value.kOff;
+    }
+
+    public void IndexRetract() {
+        _val = DoubleSolenoid.Value.kForward;
+    }
 }

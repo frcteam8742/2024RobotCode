@@ -4,11 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import edu.wpi.first.wpilibj.Joystick;
-//if we ever have to switch back to the Xbox Controllers for whatever reason, it still exists as a comment
-// import edu.wpi.first.wpilibj.XboxController;
 
 public class DriveTrainTeleopCommand extends Command {
 
@@ -42,8 +40,19 @@ public class DriveTrainTeleopCommand extends Command {
     public void execute() {
         // the right and left Flight Sticks tie to the right and left drive motors
         // respectively
+
+        // The commented code here is for if we would like to have a turbo button and
+        // turn down the speed of the regular movement. The only thing that would need
+        // to be changed is setting (inside the else statement) the speeds to lower
+        // values
+        if(_rightDriveJoystick.getRawButton(3)){
         _Drive.setRightPower(-1*_rightDriveJoystick.getY());
         _Drive.setLeftPower(-1*_leftDriveJoystick.getY());
+        } else {
+        _Drive.setRightPower(-.5 * _rightDriveJoystick.getY());
+        _Drive.setLeftPower(-.5 * _leftDriveJoystick.getY());
+        }
+
         // _Drive.setRightPower(_tempDriverController.getRightY()/1.5);
         // _Drive.setLeftPower(-_tempDriverController.getLeftY()/1.5);
 

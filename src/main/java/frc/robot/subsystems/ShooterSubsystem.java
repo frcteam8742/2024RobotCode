@@ -53,12 +53,12 @@ public class ShooterSubsystem extends SubsystemBase {
         // _BottomShooterMotor.set(_Power);
 
         // Setting PID for Top
-        _TopShooterPID.setP(TP);
-        _TopShooterPID.setI(TI);
-        _TopShooterPID.setD(TD);
-        _TopShooterPID.setIZone(TIZ);
-        _TopShooterPID.setFF(TFF);
-        _TopShooterPID.setOutputRange(-1, 1);
+        // _TopShooterPID.setP(TP);
+        // _TopShooterPID.setI(TI);
+        // _TopShooterPID.setD(TD);
+        // _TopShooterPID.setIZone(TIZ);
+        // _TopShooterPID.setFF(TFF);
+        // _TopShooterPID.setOutputRange(-1, 1);
 
         // Setting PID for Bottom
         // _BottomShooterPID.setP(BP);

@@ -32,10 +32,15 @@ public final class Constants {
     }
 
     public static class Sensors {
+        //DriveTrain
         public static final int RightDriveEncoder = 0;
         public static final int LeftDriveEncoder = 0;
+        //Shooter
         public static final int TopShooterEncoder = 0;
         public static final int BottomShooterEncoder = 0;
+        //Intake
+        public static final int BeamBreakLimitSwitch = 1;
+
     }
 
     public static class DriveTrain {
@@ -47,6 +52,8 @@ public final class Constants {
         public static final int RightMotor1 = 7;
         public static final int RightMotor2 = 6;
         public static final int RightRelativeEncoder = 0;
+        //tolerance
+        public static final int Tolerance =5;
     }
 
     public static class Intake {
@@ -55,12 +62,12 @@ public final class Constants {
     }
 
     public static class Shooter {
-        public static final double LowSpeed = -.4;
+        public static final double LowSpeed = -.2;
         public static final double HighSpeed = -1;
     }
 
     public static class Indexer {
-        public static final double IndexerSpeed = 0.15;
+        public static final double IndexerSpeed = 1;
     }
 
 }

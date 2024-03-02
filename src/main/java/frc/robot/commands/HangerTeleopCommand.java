@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.HangerSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
 
-public class HangerCommand extends Command {
+public class HangerTeleopCommand extends Command {
     /** Creates a new HangerCommand. */
     private final XboxController _Xbox;
     private final HangerSubsystem _Hanger;
-    public HangerCommand(HangerSubsystem hanger, XboxController xbox) {
+    public HangerTeleopCommand(HangerSubsystem hanger, XboxController xbox) {
         // Use addRequirements() here to declare subsystem dependencies.
         _Xbox = xbox;
         _Hanger = hanger;
@@ -28,12 +28,12 @@ public class HangerCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (_Xbox.getPOV()){
-    //   m_IndexSubsystem.IndexExtend();
-    //  } else if () {
-    //   m_IndexSubsystem.IndexRetract();
-    //  } else {m_IndexSubsystem.IndexIdle();
-    //  }
+    if (_Xbox.getPOV() == 0){
+      _Hanger.IndexExtend();
+     } else if (_Xbox.getPOV() == 180) {
+      _Hanger.IndexRetract();
+     } else {_Hanger.IndexIdle();
+     }
   }
 
     // Called once the command ends or is interrupted.
