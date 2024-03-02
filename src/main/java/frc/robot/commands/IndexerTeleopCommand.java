@@ -46,12 +46,12 @@ public class IndexerTeleopCommand extends Command {
             } else {
                 _Index.off();
             }
-        } else if (_Xbox.getLeftTriggerAxis() > Constants.Intake.TriggerDeadZone) {
-            if(!_LowDisable){
-                _Index.reverse(Constants.Indexer.IndexerLowSpeed);
-            } else {
-                _Index.off();
-            }
+        // } else if (_Xbox.getLeftTriggerAxis() > Constants.Intake.TriggerDeadZone) {
+        //     if(!_LowDisable){
+        //         _Index.reverse(Constants.Indexer.IndexerLowSpeed);
+        //     } else {
+        //         _Index.off();
+        //     }
         } else {
             if (_IndexerButtonPressed == true) {
                 _Index.forward(Constants.Indexer.IndexerSpeed);
