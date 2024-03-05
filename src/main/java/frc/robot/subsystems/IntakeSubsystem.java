@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkLowLevel.*;
-import edu.wpi.first.wpilibj.DigitalInput;
 
 public class IntakeSubsystem extends SubsystemBase {
     private CANSparkMax _TopIntakeMotor = new CANSparkMax(Constants.CANIDS.TopIntakeMotor, MotorType.kBrushless);

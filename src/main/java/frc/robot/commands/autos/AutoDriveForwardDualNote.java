@@ -5,28 +5,70 @@
 package frc.robot.commands.autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.*;
+import frc.robot.Constants;
+import frc.robot.commands.*;
 
-public class AutoDriveForwardDualNote extends Command {
-  /** Creates a new AutoDriveForwardDualNote. */
-  public AutoDriveForwardDualNote() {
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
+public class AutoDriveForwardDualNote extends SequentialCommandGroup {
+    /** Creates a new AutoDriveForwardDualNote. */
+    private DriveTrainSubsystem _DriveTrainSubsystem;
+    private ShooterSubsystem _ShooterSubsystem;
+    private IndexerSubsystem _IndexerSubsystem;
+    private IntakeSubsystem _IntakeSubsystem;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+    public AutoDriveForwardDualNote(DriveTrainSubsystem drive_Subsystem, ShooterSubsystem shooter_Subsystem,
+            IndexerSubsystem indexer_Subsystem, IntakeSubsystem intake_Subsystem) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        _DriveTrainSubsystem = drive_Subsystem;
+        _ShooterSubsystem = shooter_Subsystem;
+        _IndexerSubsystem = indexer_Subsystem;
+        _IntakeSubsystem = intake_Subsystem;
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
+        DriveTrainAutoCommand forward = new DriveTrainAutoCommand(drive_Subsystem);
+        DriveTrainAutoCommand backwards = new DriveTrainAutoCommand(drive_Subsystem);
+        DriveTrainAutoCommand stop = new DriveTrainAutoCommand(drive_Subsystem);
+        ShooterAutoCommand shootHigh = new ShooterAutoCommand(shooter_Subsystem);
+        IndexerAutoCommand indexHigh = new IndexerAutoCommand(indexer_Subsystem);
+        IndexerAutoCommand indexLow = new IndexerAutoCommand(indexer_Subsystem);
+        IntakeAutoCommand intake = new IntakeAutoCommand(intake_Subsystem);
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+        forward.setPower(.5, .5);
+        backwards.setPower(-.5, -.5);
+        stop.setPower(0, 0);
+        shootHigh.setPower(Constants.Shooter.HighSpeed);
+        indexHigh.setPower(Constants.Indexer.IndexerSpeed);
+        indexLow.setPower(-.2);
+        intake.setPower(1);
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+        addCommands(
+                shootHigh.withTimeout(2)
+                // new ParallelCommandGroup(
+                //         shootHigh,
+                //         indexHigh).withTimeout(1),
+                // new ParallelCommandGroup(
+                //         backwards,
+                //         intake).withTimeout(2),
+                // new ParallelCommandGroup(
+                //         stop,
+                //         intake).withTimeout(.5),
+                // new ParallelCommandGroup(
+                //         forward,
+                //         shootHigh,
+                //         intake).withTimeout(1.5),
+                // new ParallelCommandGroup(
+                //         forward,
+                //         shootHigh,
+                //         indexLow).withTimeout(.2),
+                // new ParallelCommandGroup(
+                //         forward,
+                //         shootHigh).withTimeout(.3),
+                // new ParallelCommandGroup(
+                //         indexHigh,
+                //         shootHigh).withTimeout(1),
+                // backwards.withTimeout(1.5)
+                );
+    }
 }

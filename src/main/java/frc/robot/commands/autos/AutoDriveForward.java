@@ -20,7 +20,7 @@ public class AutoDriveForward extends SequentialCommandGroup {
         DriveTrainAutoCommand driveForward = new DriveTrainAutoCommand(drive);
         DriveTrainAutoCommand stop = new DriveTrainAutoCommand(drive);
 
-        driveForward.setDrivePID(8, 8);
+        driveForward.setPower(.5, .5);
         stop.setPower(0, 0);
 
         addCommands(

@@ -26,24 +26,17 @@ public class AutoDriveForwardShootHigh extends SequentialCommandGroup {
         _DriveTrainSubsystem = drive_Subsystem;
         _ShooterSubsystem = shooter_Subsystem;
         _IndexerSubsystem = indexer_Subsystem;
-        DriveTrainAutoCommand forward = new DriveTrainAutoCommand(drive_Subsystem);
         DriveTrainAutoCommand backwards = new DriveTrainAutoCommand(drive_Subsystem);
         DriveTrainAutoCommand stop = new DriveTrainAutoCommand(drive_Subsystem);
         ShooterAutoCommand shootHigh = new ShooterAutoCommand(shooter_Subsystem);
         IndexerAutoCommand index = new IndexerAutoCommand(indexer_Subsystem);
-        forward.setPower(.5, .5);
         backwards.setPower(-.5, -.5);
         stop.setPower(0, 0);
         shootHigh.setPower(Constants.Shooter.HighSpeed);
         index.setPower(Constants.Indexer.IndexerSpeed);
 
         addCommands(
-                new ParallelCommandGroup(
-                        shootHigh,
-                        forward).withTimeout(2),
-                new ParallelCommandGroup(
-                        stop,
-                        shootHigh).withTimeout(1),
+                shootHigh.withTimeout(2),
                 new ParallelCommandGroup(
                         shootHigh,
                         index).withTimeout(2),

@@ -30,8 +30,8 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private PWMSparkMax _rightDrive2 = new PWMSparkMax(Constants.DriveTrain.RightMotor2);
     private PIDController _rightPid = new PIDController(_RP, _RI, _RD);
     private PIDController _leftPid = new PIDController(_LP, _LI, _LD);
-    private DriveTrainEncoder _leftDriveEncoder = new DriveTrainEncoder(Constants.Sensors.LeftDriveEncoder);
-    private DriveTrainEncoder _rightDriveEncoder = new DriveTrainEncoder(Constants.Sensors.RightDriveEncoder);
+    // private DriveTrainEncoder _leftDriveEncoder = new DriveTrainEncoder(Constants.Sensors.LeftDriveEncoder);
+    // private DriveTrainEncoder _rightDriveEncoder = new DriveTrainEncoder(Constants.Sensors.RightDriveEncoder);
 
     private double _rightPower = 0;
     private double _leftPower = 0;
@@ -66,10 +66,10 @@ public class DriveTrainSubsystem extends SubsystemBase {
             _rightDrive1.set(_rightPower);
         } else {
             // Auto uses PID
-            _rightDrive1.set(_rightPid.calculate(_rightDriveEncoder.getSpeed(),
-                    _rightSpeed));
-            _leftDrive1.set(_leftPid.calculate(_leftDriveEncoder.getSpeed(),
-                    _leftSpeed));
+            // _rightDrive1.set(_rightPid.calculate(_rightDriveEncoder.getSpeed(),
+            //         _rightSpeed));
+            // _leftDrive1.set(_leftPid.calculate(_leftDriveEncoder.getSpeed(),
+            //         _leftSpeed));
         }
     }
 

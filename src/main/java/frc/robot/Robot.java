@@ -63,11 +63,11 @@ public class Robot extends TimedRobot {
     HangerTeleopCommand _HangerTeleopCommand = new HangerTeleopCommand(_HangerSubsystem, _OperatorController);
 
     // Auto Commands
-    AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem, _GyroSubsystem);
-    AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
-    AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
-            _ShooterSubsystem, _IndexerSubsystem);
-    AutoDriveForwardDualNote _AutoDriveForwardDualNote = new AutoDriveForwardDualNote();
+    // AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem, _GyroSubsystem);
+    // AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
+    // AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
+    //         _ShooterSubsystem, _IndexerSubsystem);
+    // AutoDriveForwardDualNote _AutoDriveForwardDualNote = new AutoDriveForwardDualNote(_DriveTrainSubsystem, _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem);
 
     NetworkTables _networktables = new NetworkTables(_ShooterSubsystem, _GyroSubsystem);
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -93,6 +93,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotInit() {
+        _GyroSubsystem.reset();
         // CameraServer.startAutomaticCapture();
         // Instantiate our RobotContainer. This will perform all our button bindings,
         // and put our
@@ -157,21 +158,21 @@ public class Robot extends TimedRobot {
         }
 
         switch (_AutoChooserState) {
-            case AUTO_EXAMPLE:
-                _AutoExample.schedule();
-                break;
-            case AUTO_DRIVE_FORWARD:
-                _AutoDriveForward.schedule();
-                break;
-            case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
-                _AutoDriveForwardShootHigh.schedule();
-                break;
-            case AUTO_DRIVE_FORWARD_DUAL_NOTE:
-                _AutoDriveForwardDualNote.schedule();
-                break;
-            default:
-                _AutoDriveForward.schedule();
-                break;
+            // case AUTO_EXAMPLE:
+                // _AutoExample.schedule();
+                // break;
+            // case AUTO_DRIVE_FORWARD:
+            //     _AutoDriveForward.schedule();
+            //     break;
+            // case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
+            //     _AutoDriveForwardShootHigh.schedule();
+            //     break;
+            // case AUTO_DRIVE_FORWARD_DUAL_NOTE:
+            //     _AutoDriveForwardDualNote.schedule();
+            //     break;
+            // default:
+            //     _AutoDriveForward.schedule();
+            //     break;
         }
         System.out.println(AutoChoice);
 
@@ -186,21 +187,21 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousExit() {
         switch (_AutoChooserState) {
-            case AUTO_EXAMPLE:
-                _AutoExample.cancel();
-                break;
-            case AUTO_DRIVE_FORWARD:
-                _AutoDriveForward.cancel();
-                break;
-            case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
-                _AutoDriveForwardShootHigh.cancel();
-                break;
-            case AUTO_DRIVE_FORWARD_DUAL_NOTE:
-                _AutoDriveForwardDualNote.cancel();
-                break;
-            default:
-                _AutoDriveForward.cancel();
-                break;
+            // case AUTO_EXAMPLE:
+                // _AutoExample.cancel();
+                // break;
+        //     case AUTO_DRIVE_FORWARD:
+        //         _AutoDriveForward.cancel();
+        //         break;
+        //     case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
+        //         _AutoDriveForwardShootHigh.cancel();
+        //         break;
+        //     case AUTO_DRIVE_FORWARD_DUAL_NOTE:
+        //         _AutoDriveForwardDualNote.cancel();
+        //         break;
+        //     default:
+        //         _AutoDriveForward.cancel();
+        //         break;
         }
     }
 
@@ -213,7 +214,7 @@ public class Robot extends TimedRobot {
         _IndexerTeleopCommand.schedule();
         _IntakeTeleopCommand.schedule();
         _ShooterTeleopCommand.schedule();
-        _HangerTeleopCommand.schedule();
+        // _HangerTeleopCommand.schedule();
 
     }
 
@@ -221,9 +222,9 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         if (_BeamBreakSensor.get()){
-            _IndexerTeleopCommand.disableLow();
-        } else {
             _IndexerTeleopCommand.enableLow();
+        } else {
+            _IndexerTeleopCommand.disableLow();
         }
     }
 
@@ -235,7 +236,11 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during test mode. */
     @Override
-    public void testPeriodic() {
+    public void testPeriodic() {}
+    
+    public void execute () {
+        SmartDashboard.putBoolean("BeamBreak",_BeamBreakSensor.get());
+    
     }
 
     /** This function is called once when the robot is first started up. */

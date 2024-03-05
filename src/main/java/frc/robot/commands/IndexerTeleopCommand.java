@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 //Change to SequentialCommandGroup running both shooter and indexer with a timeout between
 public class IndexerTeleopCommand extends Command {

@@ -6,7 +6,7 @@ package frc.robot.subsystems.Devices;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GyroSubsystem extends SubsystemBase {
     /** Creates a new Gyro. */
