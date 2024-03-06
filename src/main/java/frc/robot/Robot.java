@@ -77,14 +77,14 @@ public class Robot extends TimedRobot {
     private NetworkTableEntry _AutoChoice = table.getEntry("AutoChoice");
 
 
-    enum AutoChooser {
-        AUTO_EXAMPLE,
-        AUTO_DRIVE_FORWARD,
-        AUTO_DRIVE_FORWARD_SHOOT_HIGH,
-        AUTO_DRIVE_FORWARD_DUAL_NOTE
-    }
+    // enum AutoChooser {
+    //     AUTO_EXAMPLE,
+    //     AUTO_DRIVE_FORWARD,
+    //     AUTO_DRIVE_FORWARD_SHOOT_HIGH,
+    //     AUTO_DRIVE_FORWARD_DUAL_NOTE
+    // }
 
-    AutoChooser _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
+    // AutoChooser _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -138,26 +138,27 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        String AutoChoice = _AutoChoice.getString("");
-        switch(AutoChoice){
-            case "Example":
-            _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
-            break;
-            case "DriveForward":
-            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
-            break;
-            case "OneNoteAuto":
-            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_SHOOT_HIGH;
-            break;
-            case "TwoNoteAuto":
-            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
-            break;
-            default:
-            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
-            break;
-        }
+        
+        // String AutoChoice = _AutoChoice.getString("");
+        // switch(AutoChoice){
+        //     case "Example":
+        //     _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
+        //     break;
+        //     case "DriveForward":
+        //     _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
+        //     break;
+        //     case "OneNoteAuto":
+        //     _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_SHOOT_HIGH;
+        //     break;
+        //     case "TwoNoteAuto":
+        //     _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
+        //     break;
+        //     default:
+        //     _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
+        //     break;
+        // }
 
-        switch (_AutoChooserState) {
+        // switch (_AutoChooserState) {
             // case AUTO_EXAMPLE:
                 // _AutoExample.schedule();
                 // break;
@@ -173,10 +174,10 @@ public class Robot extends TimedRobot {
             // default:
             //     _AutoDriveForward.schedule();
             //     break;
-        }
-        System.out.println(AutoChoice);
+        // }
+        // System.out.println(AutoChoice);
 
-        _GyroSubsystem.reset();
+        // _GyroSubsystem.reset();
     }
 
     /** This function is called periodically during autonomous. */
@@ -186,35 +187,34 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousExit() {
-        switch (_AutoChooserState) {
-            // case AUTO_EXAMPLE:
-                // _AutoExample.cancel();
-                // break;
-        //     case AUTO_DRIVE_FORWARD:
-        //         _AutoDriveForward.cancel();
-        //         break;
-        //     case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
-        //         _AutoDriveForwardShootHigh.cancel();
-        //         break;
-        //     case AUTO_DRIVE_FORWARD_DUAL_NOTE:
-        //         _AutoDriveForwardDualNote.cancel();
-        //         break;
-        //     default:
-        //         _AutoDriveForward.cancel();
-        //         break;
-        }
+    //     // switch (_AutoChooserState) {
+    //         // case AUTO_EXAMPLE:
+    //             // _AutoExample.cancel();
+    //             // break;
+    //     //     case AUTO_DRIVE_FORWARD:
+    //     //         _AutoDriveForward.cancel();
+    //     //         break;
+    //     //     case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
+    //     //         _AutoDriveForwardShootHigh.cancel();
+    //     //         break;
+    //     //     case AUTO_DRIVE_FORWARD_DUAL_NOTE:
+    //     //         _AutoDriveForwardDualNote.cancel();
+    //     //         break;
+    //     //     default:
+    //     //         _AutoDriveForward.cancel();
+    //     //         break;
+    //     // }
     }
 
     @Override
     public void teleopInit() {
         // This makes sure that the autonomous stops running when
         // teleop starts running.
-
         _DriveTrainTeleopCommand.schedule();
         _IndexerTeleopCommand.schedule();
         _IntakeTeleopCommand.schedule();
         _ShooterTeleopCommand.schedule();
-        // _HangerTeleopCommand.schedule();
+        _HangerTeleopCommand.schedule();
 
     }
 

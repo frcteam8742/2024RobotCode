@@ -15,32 +15,32 @@ import frc.robot.commands.*;
 public class AutoDriveForwardShootHigh extends SequentialCommandGroup {
     /** Creates a new AutoDriveForwardShootHigh. */
 
-    private DriveTrainSubsystem _DriveTrainSubsystem;
-    private ShooterSubsystem _ShooterSubsystem;
-    private IndexerSubsystem _IndexerSubsystem;
+//     private DriveTrainSubsystem _DriveTrainSubsystem;
+//     private ShooterSubsystem _ShooterSubsystem;
+//     private IndexerSubsystem _IndexerSubsystem;
 
-    public AutoDriveForwardShootHigh(DriveTrainSubsystem drive_Subsystem, ShooterSubsystem shooter_Subsystem,
-            IndexerSubsystem indexer_Subsystem) {
+//     public AutoDriveForwardShootHigh(DriveTrainSubsystem drive_Subsystem, ShooterSubsystem shooter_Subsystem,
+//             IndexerSubsystem indexer_Subsystem) {
 
-        // Use addRequirements() here to declare subsystem dependencies.
-        _DriveTrainSubsystem = drive_Subsystem;
-        _ShooterSubsystem = shooter_Subsystem;
-        _IndexerSubsystem = indexer_Subsystem;
-        DriveTrainAutoCommand backwards = new DriveTrainAutoCommand(drive_Subsystem);
-        DriveTrainAutoCommand stop = new DriveTrainAutoCommand(drive_Subsystem);
-        ShooterAutoCommand shootHigh = new ShooterAutoCommand(shooter_Subsystem);
-        IndexerAutoCommand index = new IndexerAutoCommand(indexer_Subsystem);
-        backwards.setPower(-.5, -.5);
-        stop.setPower(0, 0);
-        shootHigh.setPower(Constants.Shooter.HighSpeed);
-        index.setPower(Constants.Indexer.IndexerSpeed);
+//         // Use addRequirements() here to declare subsystem dependencies.
+//         _DriveTrainSubsystem = drive_Subsystem;
+//         _ShooterSubsystem = shooter_Subsystem;
+//         _IndexerSubsystem = indexer_Subsystem;
+//         DriveTrainAutoCommand backwards = new DriveTrainAutoCommand(drive_Subsystem);
+//         DriveTrainAutoCommand stop = new DriveTrainAutoCommand(drive_Subsystem);
+//         ShooterAutoCommand shootHigh = new ShooterAutoCommand(shooter_Subsystem);
+//         IndexerAutoCommand index = new IndexerAutoCommand(indexer_Subsystem);
+//         backwards.setPower(-.5, -.5);
+//         stop.setPower(0, 0);
+//         shootHigh.setPower(Constants.Shooter.HighSpeed);
+//         index.setPower(Constants.Indexer.IndexerSpeed);
 
-        addCommands(
-                shootHigh.withTimeout(2),
-                new ParallelCommandGroup(
-                        shootHigh,
-                        index).withTimeout(2),
-                backwards.withTimeout(3),
-                stop);
-    }
+//         addCommands(
+//                 shootHigh.withTimeout(2),
+//                 new ParallelCommandGroup(
+//                         shootHigh,
+//                         index).withTimeout(2),
+//                 backwards.withTimeout(3),
+//                 stop);
+//     }
 }

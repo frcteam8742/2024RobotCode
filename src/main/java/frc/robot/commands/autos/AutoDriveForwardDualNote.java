@@ -36,12 +36,12 @@ public class AutoDriveForwardDualNote extends SequentialCommandGroup {
         IntakeAutoCommand intake = new IntakeAutoCommand(intake_Subsystem);
 
         forward.setPower(.5, .5);
-        backwards.setPower(-.5, -.5);
-        stop.setPower(0, 0);
-        shootHigh.setPower(Constants.Shooter.HighSpeed);
-        indexHigh.setPower(Constants.Indexer.IndexerSpeed);
-        indexLow.setPower(-.2);
-        intake.setPower(1);
+        // backwards.setPower(-.5, -.5);
+        // stop.setPower(0, 0);
+        // shootHigh.setPower(Constants.Shooter.HighSpeed);
+        // indexHigh.setPower(Constants.Indexer.IndexerSpeed);
+        // indexLow.setPower(-.2);
+        // intake.setPower(1);
 
         addCommands(
                 shootHigh.withTimeout(2)
