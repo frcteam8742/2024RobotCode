@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
     Joystick _LeftDriveFlightJoystick = new Joystick(Constants.Operator.LeftFlightStickControllerPort);
     Joystick _RightDriveFlightJoystick = new Joystick(Constants.Operator.RightFlightStickControllerPort);
     XboxController _OperatorController = new XboxController(Constants.Operator.OperatorControllerPort);
+    XboxController _TempDriverController = new XboxController(Constants.Operator.TempDriverController);
 
     // Subsystems
     DriveTrainSubsystem _DriveTrainSubsystem = new DriveTrainSubsystem();
@@ -57,8 +58,10 @@ public class Robot extends TimedRobot {
     HangerSubsystem _HangerSubsystem = new HangerSubsystem();
 
     // Teleop Commands
+    // DriveTrainTeleopCommand _DriveTrainTeleopCommand = new DriveTrainTeleopCommand(_DriveTrainSubsystem,
+    //         _LeftDriveFlightJoystick, _RightDriveFlightJoystick);
     DriveTrainTeleopCommand _DriveTrainTeleopCommand = new DriveTrainTeleopCommand(_DriveTrainSubsystem,
-            _LeftDriveFlightJoystick, _RightDriveFlightJoystick);
+    _TempDriverController);
     IndexerTeleopCommand _IndexerTeleopCommand = new IndexerTeleopCommand(_IndexerSubsystem, _OperatorController);
     IntakeTeleopCommand _IntakeTeleopCommand = new IntakeTeleopCommand(_IntakeSubsystem, _OperatorController);
     ShooterTeleopCommand _ShooterTeleopCommand = new ShooterTeleopCommand(_ShooterSubsystem, _OperatorController);

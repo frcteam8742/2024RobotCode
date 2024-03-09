@@ -29,11 +29,8 @@ public class IndexerAutoCommand extends Command {
     @Override
     public void initialize() {
         _Indexer.autoPower(0);
-        if(_Timer.get() > 1){
-            _Timer.reset();
-            } else {
-            _Timer.start();
-            }
+        _Timer.reset();
+        _Timer.start();
     }
 
     // Called every time the scheduler runs while the command is scheduled.

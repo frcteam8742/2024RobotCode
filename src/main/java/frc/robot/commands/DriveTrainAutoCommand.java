@@ -26,11 +26,8 @@ public class DriveTrainAutoCommand extends Command {
 
     @Override
     public void initialize() {
-        if(_Timer.get() > 1){
         _Timer.reset();
-        } else {
         _Timer.start();
-        }
     }
 
     @Override

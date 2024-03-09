@@ -21,6 +21,7 @@ public final class Constants {
         public static final int RightFlightStickControllerPort = 1;
         public static final int LeftFlightStickControllerPort = 0;
         public static final int OperatorControllerPort = 5;
+        public static final int TempDriverController = 4;
     }
 
     public static class CANIDS {

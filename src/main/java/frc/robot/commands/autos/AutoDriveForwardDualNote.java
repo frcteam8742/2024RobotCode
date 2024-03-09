@@ -31,29 +31,30 @@ public class AutoDriveForwardDualNote extends SequentialCommandGroup {
         //Look in example for context why this is the way it is, 
         // the commands in order of when they happen
 
+        //Step 0
         ShooterAutoCommand shootHigh1 = new ShooterAutoCommand(shooter_Subsystem, 2);
-        //Group 1
+        //Step 1
         ShooterAutoCommand shootHigh2 = new ShooterAutoCommand(shooter_Subsystem, 1);
         IndexerAutoCommand indexHigh1 = new IndexerAutoCommand(indexer_Subsystem, 1, 1);
-        //Group 2
+        //Step 2
         DriveTrainAutoCommand backwards1 = new DriveTrainAutoCommand(drive_Subsystem, -.5, .1); //2
         IntakeAutoCommand intake1 = new IntakeAutoCommand(intake_Subsystem, 2);
         IntakeAutoCommand intake2 = new IntakeAutoCommand(intake_Subsystem, 2);
-        //Group 3
+        //Step 3
         DriveTrainAutoCommand forward1 = new DriveTrainAutoCommand(drive_Subsystem, .5, .1); //1.5
         ShooterAutoCommand shootHigh3 = new ShooterAutoCommand(shooter_Subsystem, 1.5);
         IntakeAutoCommand intake3 = new IntakeAutoCommand(intake_Subsystem, 1.5);
-
+        //Step 4
         DriveTrainAutoCommand forward2 = new DriveTrainAutoCommand(drive_Subsystem, .5, .1); //.2
         ShooterAutoCommand shootHigh4 = new ShooterAutoCommand(shooter_Subsystem, .2);
         IndexerAutoCommand indexLow1 = new IndexerAutoCommand(indexer_Subsystem, .2, .2);
-
+        //Step 5
         DriveTrainAutoCommand forward3 = new DriveTrainAutoCommand(drive_Subsystem, .5, .1); //.3
         ShooterAutoCommand shootHigh5 = new ShooterAutoCommand(shooter_Subsystem, .3);
-
+        //Step 6
         IndexerAutoCommand indexHigh2 = new IndexerAutoCommand(indexer_Subsystem, .7, .1); //1
         ShooterAutoCommand shootHigh6 = new ShooterAutoCommand(shooter_Subsystem, 1);
-
+        //Step 7
         DriveTrainAutoCommand backwards2 = new DriveTrainAutoCommand(drive_Subsystem, -.5, .1); //2
 
 

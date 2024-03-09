@@ -11,7 +11,7 @@ import com.revrobotics.CANSparkLowLevel.*;
 
 public class IntakeSubsystem extends SubsystemBase {
     private CANSparkMax _TopIntakeMotor = new CANSparkMax(Constants.CANIDS.TopIntakeMotor, MotorType.kBrushless);
-    private CANSparkMax _BottomIntakeMotor = new CANSparkMax(Constants.CANIDS.BottomIntakeMotor, MotorType.kBrushless);
+    private CANSparkMax _BottomIntakeMotor = new CANSparkMax(Constants.CANIDS.BottomIntakeMotor, MotorType.kBrushed);
     private double _Power = 0;
 
     /** Creates a new IntakeSubsystem. */

@@ -11,7 +11,6 @@ import frc.robot.Robot;
 import com.revrobotics.*;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -21,8 +20,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public RelativeEncoder _TopEncoder;
     public RelativeEncoder _BottomEncoder;
-    private double _CurrentTime;
-    private double _InitialTime;
 
     public SparkPIDController _TopShooterPID;
     // public SparkPIDController _BottomShooterPID;
@@ -33,9 +30,6 @@ public class ShooterSubsystem extends SubsystemBase {
     /** Creates a new ShooterSubsystem. */
     public ShooterSubsystem() {
         _TopShooterMotor.follow(_BottomShooterMotor);
-
-        _CurrentTime = 0;
-        _InitialTime = Timer.getFPGATimestamp();
 
         _TopShooterPID = _TopShooterMotor.getPIDController();
         // _BottomShooterPID = _BottomShooterMotor.getPIDController();
@@ -59,9 +53,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-
-        _CurrentTime = Timer.getFPGATimestamp() - _InitialTime;
-        SmartDashboard.putNumber("Current Time", _CurrentTime);
 
         // This method will be called once per scheduler run
         // _BottomShooterMotor.set(_Power);
