@@ -5,9 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Timer;
 
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.cameraserver.CameraServer;
@@ -63,11 +65,12 @@ public class Robot extends TimedRobot {
     HangerTeleopCommand _HangerTeleopCommand = new HangerTeleopCommand(_HangerSubsystem, _OperatorController);
 
     // Auto Commands
-    // AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem, _GyroSubsystem);
-    // AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
-    // AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
-    //         _ShooterSubsystem, _IndexerSubsystem);
-    // AutoDriveForwardDualNote _AutoDriveForwardDualNote = new AutoDriveForwardDualNote(_DriveTrainSubsystem, _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem);
+    AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem, _IndexerSubsystem, _ShooterSubsystem, _IntakeSubsystem, _GyroSubsystem);
+    
+    AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
+    AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
+            _ShooterSubsystem, _IndexerSubsystem);
+    AutoDriveForwardDualNote _AutoDriveForwardDualNote = new AutoDriveForwardDualNote(_DriveTrainSubsystem, _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem);
 
     NetworkTables _networktables = new NetworkTables(_ShooterSubsystem, _GyroSubsystem);
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -76,15 +79,14 @@ public class Robot extends TimedRobot {
     NetworkTable table = inst.getTable("datatable");
     private NetworkTableEntry _AutoChoice = table.getEntry("AutoChoice");
 
+    enum AutoChooser {
+        AUTO_EXAMPLE,
+         AUTO_DRIVE_FORWARD,
+        AUTO_DRIVE_FORWARD_SHOOT_HIGH,
+        AUTO_DRIVE_FORWARD_DUAL_NOTE
+    }
 
-    // enum AutoChooser {
-    //     AUTO_EXAMPLE,
-    //     AUTO_DRIVE_FORWARD,
-    //     AUTO_DRIVE_FORWARD_SHOOT_HIGH,
-    //     AUTO_DRIVE_FORWARD_DUAL_NOTE
-    // }
-
-    // AutoChooser _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
+    AutoChooser _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -94,7 +96,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         _GyroSubsystem.reset();
-        // CameraServer.startAutomaticCapture();
         // Instantiate our RobotContainer. This will perform all our button bindings,
         // and put our
         // autonomous chooser on the dashboard.
@@ -138,46 +139,45 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        
-        // String AutoChoice = _AutoChoice.getString("");
-        // switch(AutoChoice){
-        //     case "Example":
-        //     _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
-        //     break;
-        //     case "DriveForward":
-        //     _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
-        //     break;
-        //     case "OneNoteAuto":
-        //     _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_SHOOT_HIGH;
-        //     break;
-        //     case "TwoNoteAuto":
-        //     _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
-        //     break;
-        //     default:
-        //     _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
-        //     break;
-        // }
+        // _AutoDriveForwardDualNote.schedule();
+        String AutoChoice = _AutoChoice.getString("");
+        switch(AutoChoice){
+            case "Example":
+            _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
+            break;
+            case "DriveForward":
+            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
+            break;
+            case "OneNoteAuto":
+            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_SHOOT_HIGH;
+            break;
+            case "TwoNoteAuto":
+            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
+            break;
+            default:
+            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
+            break;
+    }
 
-        // switch (_AutoChooserState) {
-            // case AUTO_EXAMPLE:
-                // _AutoExample.schedule();
-                // break;
-            // case AUTO_DRIVE_FORWARD:
-            //     _AutoDriveForward.schedule();
-            //     break;
-            // case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
-            //     _AutoDriveForwardShootHigh.schedule();
-            //     break;
-            // case AUTO_DRIVE_FORWARD_DUAL_NOTE:
-            //     _AutoDriveForwardDualNote.schedule();
-            //     break;
-            // default:
-            //     _AutoDriveForward.schedule();
-            //     break;
-        // }
-        // System.out.println(AutoChoice);
+        switch (_AutoChooserState) {
+            case AUTO_EXAMPLE:
+                _AutoExample.schedule();
+                break;
+            case AUTO_DRIVE_FORWARD:
+                _AutoDriveForward.schedule();
+                break;
+            case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
+                _AutoDriveForwardShootHigh.schedule();
+                break;
+            case AUTO_DRIVE_FORWARD_DUAL_NOTE:
+                _AutoDriveForwardDualNote.schedule();
+                break;
+            default:
+                _AutoDriveForward.schedule();
+                break;
+        }
 
-        // _GyroSubsystem.reset();
+        _GyroSubsystem.reset();
     }
 
     /** This function is called periodically during autonomous. */
@@ -187,23 +187,23 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousExit() {
-    //     // switch (_AutoChooserState) {
-    //         // case AUTO_EXAMPLE:
-    //             // _AutoExample.cancel();
-    //             // break;
-    //     //     case AUTO_DRIVE_FORWARD:
-    //     //         _AutoDriveForward.cancel();
-    //     //         break;
-    //     //     case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
-    //     //         _AutoDriveForwardShootHigh.cancel();
-    //     //         break;
-    //     //     case AUTO_DRIVE_FORWARD_DUAL_NOTE:
-    //     //         _AutoDriveForwardDualNote.cancel();
-    //     //         break;
-    //     //     default:
-    //     //         _AutoDriveForward.cancel();
-    //     //         break;
-    //     // }
+        switch (_AutoChooserState) {
+            case AUTO_EXAMPLE:
+                _AutoExample.cancel();
+                break;
+            case AUTO_DRIVE_FORWARD:
+                _AutoDriveForward.cancel();
+                break;
+            case AUTO_DRIVE_FORWARD_SHOOT_HIGH:
+                _AutoDriveForwardShootHigh.cancel();
+                break;
+            case AUTO_DRIVE_FORWARD_DUAL_NOTE:
+                _AutoDriveForwardDualNote.cancel();
+                break;
+            default:
+                _AutoDriveForward.cancel();
+                break;
+        }
     }
 
     @Override

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.Timer;
 
 //Change to SequentialCommandGroup running both shooter and indexer with a timeout between
 public class IndexerTeleopCommand extends Command {
@@ -16,6 +17,7 @@ public class IndexerTeleopCommand extends Command {
     private boolean _IndexerButtonPressed;
     private boolean _ReverseButtonPressed;
     private boolean _LowDisable;
+    private Timer _ReverseTimer;
 
     /** Creates a new IndexerTeleopSubsystem. */
     public IndexerTeleopCommand(IndexerSubsystem index, XboxController xbox) {
@@ -64,6 +66,10 @@ public class IndexerTeleopCommand extends Command {
 
     public void disableLow(){
         _LowDisable = true;
+        // _ReverseTimer.start();
+        // if (_ReverseTimer.get() < Constants.Indexer.IndexerReverseTime){
+            // _Index.reverse(.5);
+        // }
     }
     public void enableLow(){
         _LowDisable = false;

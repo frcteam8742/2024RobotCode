@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.*;
 import frc.robot.Constants;
+import frc.robot.Constants.Intake;
 import frc.robot.commands.*;
 
 public class AutoDriveForwardDualNote extends SequentialCommandGroup {
@@ -27,48 +28,60 @@ public class AutoDriveForwardDualNote extends SequentialCommandGroup {
         _IndexerSubsystem = indexer_Subsystem;
         _IntakeSubsystem = intake_Subsystem;
 
-        DriveTrainAutoCommand forward = new DriveTrainAutoCommand(drive_Subsystem);
-        DriveTrainAutoCommand backwards = new DriveTrainAutoCommand(drive_Subsystem);
-        DriveTrainAutoCommand stop = new DriveTrainAutoCommand(drive_Subsystem);
-        ShooterAutoCommand shootHigh = new ShooterAutoCommand(shooter_Subsystem);
-        IndexerAutoCommand indexHigh = new IndexerAutoCommand(indexer_Subsystem);
-        IndexerAutoCommand indexLow = new IndexerAutoCommand(indexer_Subsystem);
-        IntakeAutoCommand intake = new IntakeAutoCommand(intake_Subsystem);
+        //Look in example for context why this is the way it is, 
+        // the commands in order of when they happen
 
-        forward.setPower(.5, .5);
-        // backwards.setPower(-.5, -.5);
-        // stop.setPower(0, 0);
-        // shootHigh.setPower(Constants.Shooter.HighSpeed);
-        // indexHigh.setPower(Constants.Indexer.IndexerSpeed);
-        // indexLow.setPower(-.2);
-        // intake.setPower(1);
+        ShooterAutoCommand shootHigh1 = new ShooterAutoCommand(shooter_Subsystem, 2);
+        //Group 1
+        ShooterAutoCommand shootHigh2 = new ShooterAutoCommand(shooter_Subsystem, 1);
+        IndexerAutoCommand indexHigh1 = new IndexerAutoCommand(indexer_Subsystem, 1, 1);
+        //Group 2
+        DriveTrainAutoCommand backwards1 = new DriveTrainAutoCommand(drive_Subsystem, -.5, .1); //2
+        IntakeAutoCommand intake1 = new IntakeAutoCommand(intake_Subsystem, 2);
+        IntakeAutoCommand intake2 = new IntakeAutoCommand(intake_Subsystem, 2);
+        //Group 3
+        DriveTrainAutoCommand forward1 = new DriveTrainAutoCommand(drive_Subsystem, .5, .1); //1.5
+        ShooterAutoCommand shootHigh3 = new ShooterAutoCommand(shooter_Subsystem, 1.5);
+        IntakeAutoCommand intake3 = new IntakeAutoCommand(intake_Subsystem, 1.5);
+
+        DriveTrainAutoCommand forward2 = new DriveTrainAutoCommand(drive_Subsystem, .5, .1); //.2
+        ShooterAutoCommand shootHigh4 = new ShooterAutoCommand(shooter_Subsystem, .2);
+        IndexerAutoCommand indexLow1 = new IndexerAutoCommand(indexer_Subsystem, .2, .2);
+
+        DriveTrainAutoCommand forward3 = new DriveTrainAutoCommand(drive_Subsystem, .5, .1); //.3
+        ShooterAutoCommand shootHigh5 = new ShooterAutoCommand(shooter_Subsystem, .3);
+
+        IndexerAutoCommand indexHigh2 = new IndexerAutoCommand(indexer_Subsystem, .7, .1); //1
+        ShooterAutoCommand shootHigh6 = new ShooterAutoCommand(shooter_Subsystem, 1);
+
+        DriveTrainAutoCommand backwards2 = new DriveTrainAutoCommand(drive_Subsystem, -.5, .1); //2
+
+
 
         addCommands(
-                shootHigh.withTimeout(2)
-                // new ParallelCommandGroup(
-                //         shootHigh,
-                //         indexHigh).withTimeout(1),
-                // new ParallelCommandGroup(
-                //         backwards,
-                //         intake).withTimeout(2),
-                // new ParallelCommandGroup(
-                //         stop,
-                //         intake).withTimeout(.5),
-                // new ParallelCommandGroup(
-                //         forward,
-                //         shootHigh,
-                //         intake).withTimeout(1.5),
-                // new ParallelCommandGroup(
-                //         forward,
-                //         shootHigh,
-                //         indexLow).withTimeout(.2),
-                // new ParallelCommandGroup(
-                //         forward,
-                //         shootHigh).withTimeout(.3),
-                // new ParallelCommandGroup(
-                //         indexHigh,
-                //         shootHigh).withTimeout(1),
-                // backwards.withTimeout(1.5)
+                shootHigh1,
+                new ParallelCommandGroup(
+                        shootHigh2,
+                        indexHigh1),
+                new ParallelCommandGroup(
+                        backwards1,
+                        intake1),        
+                intake2,
+                new ParallelCommandGroup(
+                        forward1,
+                        shootHigh3,
+                        intake3),
+                new ParallelCommandGroup(
+                        forward2,
+                        shootHigh4,
+                        indexLow1),
+                new ParallelCommandGroup(
+                        forward3,
+                        shootHigh5),
+                new ParallelCommandGroup(
+                        indexHigh2,
+                        shootHigh6).withTimeout(1),
+                backwards2
                 );
     }
 }

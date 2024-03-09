@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.Devices.GyroSubsystem;
+import edu.wpi.first.wpilibj.Timer;
+
 
 public class DriveTrainAutoTurnCommand extends Command {
 
@@ -18,7 +20,7 @@ public class DriveTrainAutoTurnCommand extends Command {
     private double _targetAngle;
     private double _tolerance;
 
-    public DriveTrainAutoTurnCommand(DriveTrainSubsystem drive, GyroSubsystem gyro) {
+    public DriveTrainAutoTurnCommand(DriveTrainSubsystem drive, GyroSubsystem gyro, double time) {
         // Use addRequirements() here to declare subsystem dependencies.
         _Drive = drive;
         _Gyro = gyro;
