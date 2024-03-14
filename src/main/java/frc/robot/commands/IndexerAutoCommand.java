@@ -16,9 +16,19 @@ public class IndexerAutoCommand extends Command {
     private double _RunTime = 0;
     private double _Power = 0;
 
-    public IndexerAutoCommand(IndexerSubsystem Indexer, double power, double time) {
+    public IndexerAutoCommand(IndexerSubsystem Indexer, double time, double power) {
         // Use addRequirements() here to declare subsystem dependencies.
         _Timer = new Timer();
+        _Power = power;
+        _RunTime = time;
+        _Indexer = Indexer;
+        addRequirements(_Indexer);
+
+    }
+    public IndexerAutoCommand(IndexerSubsystem Indexer, double time) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        _Timer = new Timer();
+        _Power = -1;
         _RunTime = time;
         _Indexer = Indexer;
         addRequirements(_Indexer);
@@ -29,8 +39,11 @@ public class IndexerAutoCommand extends Command {
     @Override
     public void initialize() {
         _Indexer.autoPower(0);
-        _Timer.reset();
-        _Timer.start();
+         if(_Timer.get() > 1){
+            _Timer.reset();
+            } else {
+            _Timer.start();
+            }
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -49,7 +62,7 @@ public class IndexerAutoCommand extends Command {
     @Override
     public boolean isFinished() {
         if (_Timer.get() > _RunTime){
-            System.out.println("stopped");
+            System.out.println("stopped Indexer");
             return true;
             }  else {
                 return false;

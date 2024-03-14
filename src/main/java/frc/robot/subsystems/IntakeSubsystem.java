@@ -10,8 +10,8 @@ import com.revrobotics.*;
 import com.revrobotics.CANSparkLowLevel.*;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private CANSparkMax _TopIntakeMotor = new CANSparkMax(Constants.CANIDS.TopIntakeMotor, MotorType.kBrushless);
-    private CANSparkMax _BottomIntakeMotor = new CANSparkMax(Constants.CANIDS.BottomIntakeMotor, MotorType.kBrushed);
+    private CANSparkMax _TopIntakeMotor = new CANSparkMax(Constants.CANIDS.TopIntakeMotor, MotorType.kBrushed);
+    private CANSparkMax _BottomIntakeMotor = new CANSparkMax(Constants.CANIDS.BottomIntakeMotor, MotorType.kBrushless);
     private double _Power = 0;
 
     /** Creates a new IntakeSubsystem. */
@@ -21,8 +21,8 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        _BottomIntakeMotor.set(-_Power);
-        _TopIntakeMotor.set(-Constants.Intake.IntakeOffsetMultiplicative * _Power);
+        _BottomIntakeMotor.set(Constants.Intake.IntakeOffsetMultiplicativ2*_Power);
+        _TopIntakeMotor.set(-Constants.Intake.IntakeOffsetMultiplicative* _Power);
 }
 
     public void off() {

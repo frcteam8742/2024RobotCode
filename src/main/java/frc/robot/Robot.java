@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -39,8 +40,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
  */
 public class Robot extends TimedRobot {
 
-
-    //Sensors
+    // Sensors
     DigitalInput _BeamBreakSensor = new DigitalInput(Constants.Sensors.BeamBreakLimitSwitch);
 
     // HIDS
@@ -58,22 +58,26 @@ public class Robot extends TimedRobot {
     HangerSubsystem _HangerSubsystem = new HangerSubsystem();
 
     // Teleop Commands
-    // DriveTrainTeleopCommand _DriveTrainTeleopCommand = new DriveTrainTeleopCommand(_DriveTrainSubsystem,
-    //         _LeftDriveFlightJoystick, _RightDriveFlightJoystick);
+    // DriveTrainTeleopCommand _DriveTrainTeleopCommand = new
+    // DriveTrainTeleopCommand(_DriveTrainSubsystem,
+    // _LeftDriveFlightJoystick, _RightDriveFlightJoystick);
     DriveTrainTeleopCommand _DriveTrainTeleopCommand = new DriveTrainTeleopCommand(_DriveTrainSubsystem,
-    _TempDriverController);
+            _TempDriverController);
     IndexerTeleopCommand _IndexerTeleopCommand = new IndexerTeleopCommand(_IndexerSubsystem, _OperatorController);
     IntakeTeleopCommand _IntakeTeleopCommand = new IntakeTeleopCommand(_IntakeSubsystem, _OperatorController);
     ShooterTeleopCommand _ShooterTeleopCommand = new ShooterTeleopCommand(_ShooterSubsystem, _OperatorController);
     HangerTeleopCommand _HangerTeleopCommand = new HangerTeleopCommand(_HangerSubsystem, _OperatorController);
 
     // Auto Commands
-    AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem, _IndexerSubsystem, _ShooterSubsystem, _IntakeSubsystem, _GyroSubsystem);
-    
+    AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem, _IndexerSubsystem, _ShooterSubsystem,
+            _IntakeSubsystem, _GyroSubsystem);
+
     AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
     AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
-            _ShooterSubsystem, _IndexerSubsystem);
-    AutoDriveForwardDualNote _AutoDriveForwardDualNote = new AutoDriveForwardDualNote(_DriveTrainSubsystem, _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem);
+            _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem, _GyroSubsystem);
+            
+    AutoDriveForwardDualNote _AutoDriveForwardDualNote = new AutoDriveForwardDualNote(_DriveTrainSubsystem,
+            _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem, _GyroSubsystem);
 
     NetworkTables _networktables = new NetworkTables(_ShooterSubsystem, _GyroSubsystem);
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -84,7 +88,7 @@ public class Robot extends TimedRobot {
 
     enum AutoChooser {
         AUTO_EXAMPLE,
-         AUTO_DRIVE_FORWARD,
+        AUTO_DRIVE_FORWARD,
         AUTO_DRIVE_FORWARD_SHOOT_HIGH,
         AUTO_DRIVE_FORWARD_DUAL_NOTE
     }
@@ -123,8 +127,12 @@ public class Robot extends TimedRobot {
         // and running subsystem periodic() methods. This must be called from the
         // robot's periodic
         // block in order for anything in the Command-based framework to work.
+
         CommandScheduler.getInstance().run();
         // _networktables.periodic();
+        // _GyroSubsystem.periodic();
+        // SmartDashboard.putNumber("Angle: ", _GyroSubsystem.getZ());
+
     }
 
     /** This function is called once each time the robot enters Disabled mode. */
@@ -142,25 +150,25 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        // _AutoDriveForwardDualNote.schedule();
+        _AutoDriveForwardDualNote.schedule();
         String AutoChoice = _AutoChoice.getString("");
-        switch(AutoChoice){
+        switch (AutoChoice) {
             case "Example":
-            _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
-            break;
+                _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
+                break;
             case "DriveForward":
-            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
-            break;
+                _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
+                break;
             case "OneNoteAuto":
-            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_SHOOT_HIGH;
-            break;
+                _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_SHOOT_HIGH;
+                break;
             case "TwoNoteAuto":
-            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
-            break;
+                _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
+                break;
             default:
-            _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
-            break;
-    }
+                _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
+                break;
+        }
 
         switch (_AutoChooserState) {
             case AUTO_EXAMPLE:
@@ -211,6 +219,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        System.out.println("Hello");
         // This makes sure that the autonomous stops running when
         // teleop starts running.
         _DriveTrainTeleopCommand.schedule();
@@ -224,7 +233,7 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
-        if (_BeamBreakSensor.get()){
+        if (_BeamBreakSensor.get()) {
             _IndexerTeleopCommand.enableLow();
         } else {
             _IndexerTeleopCommand.disableLow();
@@ -239,11 +248,12 @@ public class Robot extends TimedRobot {
 
     /** This function is called periodically during test mode. */
     @Override
-    public void testPeriodic() {}
-    
-    public void execute () {
-        SmartDashboard.putBoolean("BeamBreak",_BeamBreakSensor.get());
-    
+    public void testPeriodic() {
+    }
+
+    public void execute() {
+        SmartDashboard.putBoolean("BeamBreak", _BeamBreakSensor.get());
+
     }
 
     /** This function is called once when the robot is first started up. */

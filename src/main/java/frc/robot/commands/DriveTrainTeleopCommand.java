@@ -27,7 +27,6 @@ public class DriveTrainTeleopCommand extends Command {
         // _rightDriveJoystick = rjoystick;
         _tempDriverController = tXboxController;
         addRequirements(_Drive);
-
     }
 
     // Called when the command is initially scheduled.
@@ -57,8 +56,14 @@ public class DriveTrainTeleopCommand extends Command {
         // _Drive.setLeftPower(-.5 * _leftDriveJoystick.getY());
         // }
 
-        _Drive.setRightPower(_tempDriverController.getRightY()/1.5);
-        _Drive.setLeftPower(-_tempDriverController.getLeftY()/1.5);
+        if(_tempDriverController.getLeftBumper()){
+            _Drive.setRightPower(-_tempDriverController.getLeftY());
+            _Drive.setLeftPower(-_tempDriverController.getRightY());
+            } else {
+            _Drive.setRightPower(-_tempDriverController.getLeftY()/1.5);
+            _Drive.setLeftPower(-_tempDriverController.getRightY()/1.5);
+            }
+        
 
     }
 

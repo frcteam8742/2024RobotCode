@@ -33,11 +33,13 @@ public class AutoExample extends SequentialCommandGroup {
         _Gyro = gyro;
 
         //REMINDER: DO NOT CALL ANY OF THESE TWICE OR SYSTEM WILL CRASH
-        DriveTrainAutoCommand drive1 = new DriveTrainAutoCommand(drive_subsystem, .2, 3);
-        DriveTrainAutoCommand drive2 = new DriveTrainAutoCommand(drive_subsystem, .5, 3);
-        IndexerAutoCommand index = new IndexerAutoCommand(index_subsystem, .5, 2);
-        ShooterAutoCommand shootHigh = new ShooterAutoCommand(shooter_subsystem, 1);
-        IntakeAutoCommand intake = new IntakeAutoCommand(intake_subsystem, 2);
+        DriveTrainAutoCommand drive1 = new DriveTrainAutoCommand(drive_subsystem, -.1, .1);
+        DriveTrainAutoCommand drive2 = new DriveTrainAutoCommand(drive_subsystem, .1, .1);
+        IndexerAutoCommand index = new IndexerAutoCommand(index_subsystem, .1);
+        ShooterAutoCommand shootHigh1 = new ShooterAutoCommand(shooter_subsystem, .1);
+        ShooterAutoCommand shootHigh2 = new ShooterAutoCommand(shooter_subsystem, .1);
+        IntakeAutoCommand intake = new IntakeAutoCommand(intake_subsystem, 3);
+        DriveTrainAutoTurnCommand turn1 = new DriveTrainAutoTurnCommand(drive_subsystem, gyro, 45);
 
 
         // DriveTrainAutoCommand drive2 = new DriveTrainAutoCommand(drive_subsystem);
@@ -51,12 +53,14 @@ public class AutoExample extends SequentialCommandGroup {
         
                 // drives backward for .2 seconds then stops for .5
         addCommands(
+            shootHigh1,
             new ParallelCommandGroup(
                 index,
-                drive1), 
+                shootHigh2),
+            drive1,
             drive2,
-            shootHigh,
-            intake
+            intake,
+            turn1
         );
     }
 }

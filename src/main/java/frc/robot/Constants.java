@@ -60,18 +60,19 @@ public final class Constants {
     }
 
     public static class Intake {
-        public static final double IntakeOffsetMultiplicative = 0.95;
+        public static final double IntakeOffsetMultiplicative = 0.75;
+        public static final double IntakeOffsetMultiplicativ2 = 0.80;
         public static final double TriggerDeadZone = 0.2;
     }
 
     public static class Shooter {
-        public static final double LowSpeed = -.5;
+        public static final double LowSpeed = -.45;
         public static final double HighSpeed = -1;
     }
 
     public static class Indexer {
         public static final double IndexerSpeed = 1;
-        public static final double IndexerLowSpeed = -.2;
+        public static final double IndexerLowSpeed = -.3;
         public static final double IndexerReverseTime = .2;
     }
 

@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.Devices.GyroSubsystem;
-import edu.wpi.first.wpilibj.Timer;
-
 
 public class DriveTrainAutoTurnCommand extends Command {
 
@@ -20,10 +18,11 @@ public class DriveTrainAutoTurnCommand extends Command {
     private double _targetAngle;
     private double _tolerance;
 
-    public DriveTrainAutoTurnCommand(DriveTrainSubsystem drive, GyroSubsystem gyro, double time) {
+    public DriveTrainAutoTurnCommand(DriveTrainSubsystem drive, GyroSubsystem gyro, double angle) {
         // Use addRequirements() here to declare subsystem dependencies.
         _Drive = drive;
         _Gyro = gyro;
+        _targetAngle = angle;
         addRequirements(_Drive);
         addRequirements(_Gyro);
     }
@@ -34,9 +33,7 @@ public class DriveTrainAutoTurnCommand extends Command {
         // initialize motors as off
         _Drive.setRightPower(0);
         _Drive.setLeftPower(0);
-        _Gyro.reset();
         _currentAngle = 0;
-        _targetAngle = 0;
         _tolerance = Constants.DriveTrain.Tolerance;
     }
 
@@ -44,21 +41,22 @@ public class DriveTrainAutoTurnCommand extends Command {
     @Override
     public void execute() {
         _currentAngle = _Gyro.getZ();
+        // if ((dest - source + 360) % 360 < 180)
         double deltaAngle = _currentAngle - _targetAngle;
         if (deltaAngle >= 0) {
-            _Drive.setLeftPower(-.05*deltaAngle);
-            _Drive.setRightPower(.05*deltaAngle);
+            _Drive.setLeftPower(-.01*deltaAngle);
+            _Drive.setRightPower(.01*deltaAngle);
         }
         if (_currentAngle - _targetAngle < 0) {
-            _Drive.setLeftPower(.05*deltaAngle);
-            _Drive.setRightPower(-.05*deltaAngle);
+            _Drive.setLeftPower(.01*deltaAngle);
+            _Drive.setRightPower(-.01*deltaAngle);
         }
     }
 
-    public void turnPower(double targetAngle, double tolerance) {
-        _targetAngle = targetAngle;
-        _tolerance = tolerance; 
-    }
+    // public void turnPower(double targetAngle, double tolerance) {
+    //     _targetAngle = targetAngle;
+    //     _tolerance = tolerance; 
+    // }
         // set left power until angle enters tolerance
 
 
@@ -72,10 +70,14 @@ public class DriveTrainAutoTurnCommand extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(Math.abs((_currentAngle - _targetAngle)) > _tolerance){
-            return true;
+        if(Math.abs((_currentAngle - _targetAngle)) > 5){
+            System.out.println(Math.abs((_currentAngle - _targetAngle)));
+            System.out.println("Turn stopped");
+            System.out.println(_currentAngle + " Our Angle");
+            System.out.println(_targetAngle + " Angle we want");
+            return false;
         } else {
-        return false;
+        return true;
         }
     }
 }

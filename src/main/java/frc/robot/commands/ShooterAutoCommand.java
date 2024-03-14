@@ -51,7 +51,7 @@ public class ShooterAutoCommand extends Command {
     @Override
     public boolean isFinished() {
         if (_Timer.get() > _RunTime){
-            System.out.println("stopped");
+            System.out.println("stopped Shooter");
             return true;
             }  else {
                 return false;

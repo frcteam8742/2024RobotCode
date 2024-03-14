@@ -45,9 +45,9 @@ public class IntakeTeleopCommand extends Command {
         if (Right == 0 && Left == 0) {
             _Intake.off();
         } else if (Left >= Right) {
-            _Intake.on(.5*Left);
+            _Intake.reverse(.35*Left);
         } else {
-            _Intake.reverse(.5*Right);
+            _Intake.on(.35*Right);
         }
 
         // if (_Xbox.getAButton()) {
