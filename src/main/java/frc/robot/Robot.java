@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
     AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
     AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
             _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem, _GyroSubsystem);
-            
+
     AutoDriveForwardDualNote _AutoDriveForwardDualNote = new AutoDriveForwardDualNote(_DriveTrainSubsystem,
             _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem, _GyroSubsystem);
 
@@ -166,7 +166,7 @@ public class Robot extends TimedRobot {
                 _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
                 break;
             default:
-                _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD;
+                _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_SHOOT_HIGH;
                 break;
         }
 
@@ -184,7 +184,7 @@ public class Robot extends TimedRobot {
                 _AutoDriveForwardDualNote.schedule();
                 break;
             default:
-                _AutoDriveForward.schedule();
+                _AutoDriveForwardShootHigh.schedule();
                 break;
         }
 
@@ -212,7 +212,7 @@ public class Robot extends TimedRobot {
                 _AutoDriveForwardDualNote.cancel();
                 break;
             default:
-                _AutoDriveForward.cancel();
+                _AutoDriveForwardShootHigh.cancel();
                 break;
         }
     }

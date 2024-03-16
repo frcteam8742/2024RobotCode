@@ -17,7 +17,7 @@ public class AutoDriveForward extends SequentialCommandGroup {
     public AutoDriveForward(DriveTrainSubsystem drive) {
         // Use addRequirements() here to declare subsystem dependencies.
         // Drive = drive;
-        DriveTrainAutoCommand driveForward = new DriveTrainAutoCommand(drive, .2, 2);
+        DriveTrainAutoCommand driveForward = new DriveTrainAutoCommand(drive, -.5, .9);
 
         addCommands(
                 driveForward
