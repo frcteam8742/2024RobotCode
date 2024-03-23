@@ -57,11 +57,11 @@ public class DriveTrainTeleopCommand extends Command {
         // }
 
         if (_tempDriverController.getRightBumper()){
+            _Drive.setRightPower(-_tempDriverController.getLeftY()*.67);
+            _Drive.setLeftPower(-_tempDriverController.getRightY()*.67);
+            } else {
             _Drive.setRightPower(-_tempDriverController.getLeftY());
             _Drive.setLeftPower(-_tempDriverController.getRightY());
-            } else {
-            _Drive.setRightPower(-_tempDriverController.getLeftY()/1.5);
-            _Drive.setLeftPower(-_tempDriverController.getRightY()/1.5);
             }
         
 

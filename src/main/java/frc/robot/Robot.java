@@ -19,6 +19,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Devices.GyroSubsystem;
 import frc.robot.commands.autos.*;
+// import edu.wpi.first.math.proto.System;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -56,6 +57,7 @@ public class Robot extends TimedRobot {
     ShooterSubsystem _ShooterSubsystem = new ShooterSubsystem();
     GyroSubsystem _GyroSubsystem = new GyroSubsystem();
     HangerSubsystem _HangerSubsystem = new HangerSubsystem();
+    AmpSubsystem _AmpSubsystem = new AmpSubsystem();
 
     // Teleop Commands
     // DriveTrainTeleopCommand _DriveTrainTeleopCommand = new
@@ -67,30 +69,36 @@ public class Robot extends TimedRobot {
     IntakeTeleopCommand _IntakeTeleopCommand = new IntakeTeleopCommand(_IntakeSubsystem, _OperatorController);
     ShooterTeleopCommand _ShooterTeleopCommand = new ShooterTeleopCommand(_ShooterSubsystem, _OperatorController);
     HangerTeleopCommand _HangerTeleopCommand = new HangerTeleopCommand(_HangerSubsystem, _OperatorController);
+    AmpTeleopCommand _AmpTeleopCommand = new AmpTeleopCommand(_AmpSubsystem, _OperatorController);
+    AutoChooserCommand _AutoChooserCommand = new AutoChooserCommand();
 
     // Auto Commands
     AutoExample _AutoExample = new AutoExample(_DriveTrainSubsystem, _IndexerSubsystem, _ShooterSubsystem,
             _IntakeSubsystem, _GyroSubsystem);
 
     AutoDriveForward _AutoDriveForward = new AutoDriveForward(_DriveTrainSubsystem);
+
     AutoDriveForwardShootHigh _AutoDriveForwardShootHigh = new AutoDriveForwardShootHigh(_DriveTrainSubsystem,
             _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem, _GyroSubsystem);
 
     AutoDriveForwardDualNote _AutoDriveForwardDualNote = new AutoDriveForwardDualNote(_DriveTrainSubsystem,
             _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem, _GyroSubsystem);
 
-    NetworkTables _networktables = new NetworkTables(_ShooterSubsystem, _GyroSubsystem);
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    AutoDriveForwardSideShootSingleNote _AutoDriveForwardSideShootSingleNote = new AutoDriveForwardSideShootSingleNote(
+            _DriveTrainSubsystem, _ShooterSubsystem, _IndexerSubsystem, _IntakeSubsystem, _GyroSubsystem);
 
-    // Standard robot network tables
-    NetworkTable table = inst.getTable("datatable");
-    private NetworkTableEntry _AutoChoice = table.getEntry("AutoChoice");
+    AutoThreeNoteLeft _AutoThreeNoteLeft = new AutoThreeNoteLeft(_DriveTrainSubsystem, _ShooterSubsystem,
+            _IndexerSubsystem, _IntakeSubsystem, _GyroSubsystem);
+
+    NetworkTables _networktables = new NetworkTables(_ShooterSubsystem, _GyroSubsystem);
 
     enum AutoChooser {
         AUTO_EXAMPLE,
         AUTO_DRIVE_FORWARD,
         AUTO_DRIVE_FORWARD_SHOOT_HIGH,
-        AUTO_DRIVE_FORWARD_DUAL_NOTE
+        AUTO_DRIVE_FORWARD_DUAL_NOTE,
+        AUTO_THREE_NOTE_LEFT,
+        AUTO_DRIVE_FORWARD_SIDE_SHOOT_SINGLE_NOTE
     }
 
     AutoChooser _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
@@ -142,6 +150,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
+        _AutoChooserCommand.execute();
+        // _GyroSubsystem.reset();
     }
 
     /**
@@ -150,8 +160,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        _AutoDriveForwardDualNote.schedule();
-        String AutoChoice = _AutoChoice.getString("");
+        _GyroSubsystem.reset();
+        // _AutoDriveForwardDualNote.schedule();
+        String AutoChoice = _AutoChooserCommand.getValue();
+        System.out.println(AutoChoice + " Was chosen");
         switch (AutoChoice) {
             case "Example":
                 _AutoChooserState = AutoChooser.AUTO_EXAMPLE;
@@ -164,6 +176,12 @@ public class Robot extends TimedRobot {
                 break;
             case "TwoNoteAuto":
                 _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_DUAL_NOTE;
+                break;
+            case "ThreeNoteAutoLeft": 
+                _AutoChooserState = AutoChooser.AUTO_THREE_NOTE_LEFT;
+                break;
+            case "OneNoteAutoSide":
+                _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_SIDE_SHOOT_SINGLE_NOTE;
                 break;
             default:
                 _AutoChooserState = AutoChooser.AUTO_DRIVE_FORWARD_SHOOT_HIGH;
@@ -183,12 +201,17 @@ public class Robot extends TimedRobot {
             case AUTO_DRIVE_FORWARD_DUAL_NOTE:
                 _AutoDriveForwardDualNote.schedule();
                 break;
+            case AUTO_THREE_NOTE_LEFT:
+                _AutoThreeNoteLeft.schedule();
+                break;
+            case AUTO_DRIVE_FORWARD_SIDE_SHOOT_SINGLE_NOTE:
+                _AutoDriveForwardSideShootSingleNote.schedule();
+                break;
             default:
                 _AutoDriveForwardShootHigh.schedule();
                 break;
         }
-
-        _GyroSubsystem.reset();
+        // _GyroSubsystem.reset();
     }
 
     /** This function is called periodically during autonomous. */
@@ -211,6 +234,12 @@ public class Robot extends TimedRobot {
             case AUTO_DRIVE_FORWARD_DUAL_NOTE:
                 _AutoDriveForwardDualNote.cancel();
                 break;
+            case AUTO_THREE_NOTE_LEFT:
+                _AutoThreeNoteLeft.cancel();
+                break;
+            case AUTO_DRIVE_FORWARD_SIDE_SHOOT_SINGLE_NOTE:
+                _AutoDriveForwardSideShootSingleNote.cancel();
+                break;
             default:
                 _AutoDriveForwardShootHigh.cancel();
                 break;
@@ -219,7 +248,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        System.out.println("Hello");
+        System.out.println("Hello... \n ...robot initializing...");
         // This makes sure that the autonomous stops running when
         // teleop starts running.
         _DriveTrainTeleopCommand.schedule();
@@ -227,6 +256,7 @@ public class Robot extends TimedRobot {
         _IntakeTeleopCommand.schedule();
         _ShooterTeleopCommand.schedule();
         _HangerTeleopCommand.schedule();
+        _AmpTeleopCommand.schedule();
 
     }
 

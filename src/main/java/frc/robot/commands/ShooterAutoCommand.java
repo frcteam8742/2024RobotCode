@@ -14,18 +14,29 @@ public class ShooterAutoCommand extends Command {
     private final ShooterSubsystem _Shooter;
     private Timer _Timer;
     private double _RunTime = 0;
+    private double _Power = 0;
 
+    public ShooterAutoCommand(ShooterSubsystem shooter, double time, double power) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        _Timer = new Timer();
+        _RunTime = time;
+        _Shooter = shooter;
+        _Power = power;
+        addRequirements(_Shooter);
+    }
     public ShooterAutoCommand(ShooterSubsystem shooter, double time) {
         // Use addRequirements() here to declare subsystem dependencies.
         _Timer = new Timer();
         _RunTime = time;
         _Shooter = shooter;
+        _Power = Constants.Shooter.HighSpeed;
         addRequirements(_Shooter);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        System.out.println("started Shooter");
         _Shooter.off();
         if(_Timer.get() > 1){
             _Timer.reset();
@@ -37,7 +48,7 @@ public class ShooterAutoCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        _Shooter.autoPower(Constants.Shooter.HighSpeed);
+        _Shooter.autoPower(_Power);
     }
 
     // Called once the command ends or is interrupted.

@@ -79,6 +79,12 @@ public class ShooterSubsystem extends SubsystemBase {
         _BottomShooterMotor.set(power);
     }
 
+    public void reverse() {
+        // System.out.println("Low Set");
+        _BottomShooterMotor.set(-Constants.Shooter.LowSpeed);
+        // _TopShooterPID.setReference(Constants.Shooter.LowSpeed,
+        // CANSparkMax.ControlType.kVelocity);
+    }
     public void low() {
         // System.out.println("Low Set");
         _BottomShooterMotor.set(Constants.Shooter.LowSpeed);

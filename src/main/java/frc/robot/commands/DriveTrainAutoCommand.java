@@ -28,6 +28,8 @@ public class DriveTrainAutoCommand extends Command {
     public void initialize() {
         _Timer.reset();
         _Timer.start();
+        System.out.println("Drive (power) stopped");
+
     }
 
     @Override
@@ -46,9 +48,9 @@ public class DriveTrainAutoCommand extends Command {
     @Override
     public boolean isFinished() {
         if (_Timer.get() > _RunTime){
-        System.out.println("stopped");
+        System.out.println("Drive (power) stopped");
         return true;
-        }  else {
+        } else {
             return false;
         }
     }

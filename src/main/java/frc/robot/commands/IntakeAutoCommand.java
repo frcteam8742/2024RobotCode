@@ -13,7 +13,7 @@ public class IntakeAutoCommand extends Command {
   private final IntakeSubsystem _Intake;
   private Timer _Timer;
   private double _RunTime = 0;
-  private double _power;
+  private double _Power;
 
   /** Creates a new IntakeAutoCommand. */
   public IntakeAutoCommand(IntakeSubsystem intake, double time) {
@@ -21,7 +21,7 @@ public class IntakeAutoCommand extends Command {
     _Timer = new Timer();
     _RunTime = time;
     _Intake = intake;
-    _power = -0.275;
+    _Power = -0.3;
     addRequirements(_Intake);
   }
 
@@ -31,13 +31,15 @@ public class IntakeAutoCommand extends Command {
     _Timer = new Timer();
     _RunTime = time;
     _Intake = intake;
-    _power = power;
+    _Power = power;
     addRequirements(_Intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("started Intake");
+
      _Intake.on(0);
         if(_Timer.get() > 1){
             _Timer.reset();
@@ -49,7 +51,7 @@ public class IntakeAutoCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    _Intake.on(_power);
+    _Intake.on(_Power);
   }
 
   // Called once the command ends or is interrupted.

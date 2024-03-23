@@ -11,6 +11,8 @@
 // //AND RUNNING SHOOTING WHEELS, (NOTE IS ALREADY IN POSITION) THEN INDEXES 
 // //WHILE RUNNING SHOOTER WHEELS
 
+//Will save for last, unimportant in opposed to auto
+
 // import edu.wpi.first.wpilibj2.command.Command;
 // // import frc.robot.commands.DriveTrainAutoCommand;
 // import frc.robot.commands.DriveTrainAutoTurnCommand;

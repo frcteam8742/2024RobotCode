@@ -5,44 +5,42 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.NetworkTables;
+import edu.wpi.first.networktables.*;
 
-public class ShooterTeleopCommand extends Command {
-    /** Creates a new ShooterTeleopCommand. */
-    private final ShooterSubsystem _Shooter;
-    private XboxController _Xbox;
+public class AutoChooserCommand extends Command {
+    /** Creates a new AutoChooserCommand. */
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    // Standard robot network tables
+    NetworkTable table = inst.getTable("datatable");
+    private NetworkTableEntry _AutoChoice = table.getEntry("AutoChoice");
 
-    public ShooterTeleopCommand(ShooterSubsystem shooter, XboxController xbox) {
-        
+    String AutoChoice = "";
+
+    public AutoChooserCommand() {
         // Use addRequirements() here to declare subsystem dependencies.
-        _Shooter = shooter;
-        _Xbox = xbox;
-        addRequirements(_Shooter);
+
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        _Shooter.off();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (_Xbox.getYButton()) {
-            _Shooter.high();
-        } else if (_Xbox.getXButton()) { //else if (_Xbox.getBButton()) 
-            _Shooter.low();
-        } else if (_Xbox.getRawButton(7)){
-            _Shooter.off();
-        }
+        AutoChoice = _AutoChoice.getString("");
+        // System.out.println(AutoChoice);
+    }
+
+    public String getValue() {
+        return AutoChoice;
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        _Shooter.off();
     }
 
     // Returns true when the command should end.

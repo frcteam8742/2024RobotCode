@@ -4,19 +4,22 @@
 
 package frc.robot.commands;
 
+// import edu.wpi.first.math.proto.System;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainSubsystem;
 import frc.robot.subsystems.Devices.GyroSubsystem;
+import edu.wpi.first.wpilibj.Timer;
 
 public class DriveTrainAutoTurnCommand extends Command {
 
     /** Creates a new DriveTrainCommand. */
-    private final DriveTrainSubsystem _Drive;
-    private final GyroSubsystem _Gyro;
+    private DriveTrainSubsystem _Drive;
+    private GyroSubsystem _Gyro;
     private double _currentAngle;
     private double _targetAngle;
-    private double _tolerance;
+    // private double _tolerance;
+    private double _DeltaAngle;
 
     public DriveTrainAutoTurnCommand(DriveTrainSubsystem drive, GyroSubsystem gyro, double angle) {
         // Use addRequirements() here to declare subsystem dependencies.
@@ -33,24 +36,34 @@ public class DriveTrainAutoTurnCommand extends Command {
         // initialize motors as off
         _Drive.setRightPower(0);
         _Drive.setLeftPower(0);
-        _currentAngle = 0;
-        _tolerance = Constants.DriveTrain.Tolerance;
+        // _tolerance = Constants.DriveTrain.Tolerance;
+        System.out.println("Turning start");
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         _currentAngle = _Gyro.getZ();
-        // if ((dest - source + 360) % 360 < 180)
         double deltaAngle = _currentAngle - _targetAngle;
-        if (deltaAngle >= 0) {
-            _Drive.setLeftPower(-.01*deltaAngle);
-            _Drive.setRightPower(.01*deltaAngle);
+        // double deltaAngle = (_targetAngle - _currentAngle + 360) % 360;
+        System.out.println("ANGLE:" + deltaAngle + "   THIS IS DELTA ANGLE");
+        System.out.println(Math.abs(_DeltaAngle)+ "ABSOLOUTE VALUE OF IT");
+
+
+        if (deltaAngle <= 0) {
+            System.out.println("turning RIGHT");
+            // _Drive.setLeftPower(.001*Math.abs(deltaAngle));
+            // _Drive.setRightPower(-.001*Math.abs(deltaAngle));
+            _Drive.setLeftPower(-.6);
+            _Drive.setRightPower(.6);
+        } else if (deltaAngle > 0) {
+            System.out.println("turning LEFT");
+            _Drive.setLeftPower(.5);
+            _Drive.setRightPower(-.5);
+            // _Drive.setLeftPower(-.001*(Math.abs(deltaAngle)));
+            // _Drive.setRightPower(.001*(Math.abs(deltaAngle)));
         }
-        if (_currentAngle - _targetAngle < 0) {
-            _Drive.setLeftPower(.01*deltaAngle);
-            _Drive.setRightPower(-.01*deltaAngle);
-        }
+        _DeltaAngle = deltaAngle;
     }
 
     // public void turnPower(double targetAngle, double tolerance) {
@@ -70,14 +83,14 @@ public class DriveTrainAutoTurnCommand extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if(Math.abs((_currentAngle - _targetAngle)) > 5){
-            System.out.println(Math.abs((_currentAngle - _targetAngle)));
-            System.out.println("Turn stopped");
-            System.out.println(_currentAngle + " Our Angle");
-            System.out.println(_targetAngle + " Angle we want");
-            return false;
+        if(Math.abs((_DeltaAngle)) < 5){
+            // System.out.println(Math.abs((_currentAngle - _targetAngle)));
+            // System.out.println(_currentAngle + " Our Angle");
+            // System.out.println(_targetAngle + " Angle we want");
+            return true;
         } else {
-        return true;
+        System.out.println("Turn stopped");
+        return false;
         }
     }
 }

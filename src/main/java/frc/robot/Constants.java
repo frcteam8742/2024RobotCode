@@ -48,13 +48,11 @@ public final class Constants {
         // left
         public static final int LeftMotor1 = 9;
         public static final int LeftMotor2 = 8;
-       // public static final int LeftRelativeEncoder = 0;\
-       // isn't this already specified under sensors?
+    //    public static final int LeftRelativeEncoder = 0; //DIO
         // right
         public static final int RightMotor1 = 7;
         public static final int RightMotor2 = 6;
-       // public static final int RightRelativeEncoder = 1;
-        //was 0...isn't this already specified under sensors?
+    //    public static final int RightRelativeEncoder = 1; //DIO
         //tolerance
         public static final int Tolerance =5;
     }
@@ -66,7 +64,7 @@ public final class Constants {
     }
 
     public static class Shooter {
-        public static final double LowSpeed = -.45;
+        public static final double LowSpeed = -.3;
         public static final double HighSpeed = -1;
     }
 

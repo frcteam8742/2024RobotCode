@@ -38,44 +38,16 @@ public class AutoExample extends SequentialCommandGroup {
         IndexerAutoCommand index = new IndexerAutoCommand(index_subsystem, .1);
         ShooterAutoCommand shootHigh1 = new ShooterAutoCommand(shooter_subsystem, .1);
         ShooterAutoCommand shootHigh2 = new ShooterAutoCommand(shooter_subsystem, .1);
-        IntakeAutoCommand intake = new IntakeAutoCommand(intake_subsystem, 3);
+        IntakeAutoCommand intake = new IntakeAutoCommand(intake_subsystem, 3, -.275);
         DriveTrainAutoTurnCommand turn1 = new DriveTrainAutoTurnCommand(drive_subsystem, gyro, 45);
-
-
-        // DriveTrainAutoCommand drive2 = new DriveTrainAutoCommand(drive_subsystem);
-        // DriveTrainAutoTurnCommand turn1 = new DriveTrainAutoTurnCommand(drive_subsystem, gyro);
-
-        // drive2.setPower(0, 0);
-        // turn1.turnPower(54, Constants.DriveTrain.Tolerance);
+        DriveTrainPIDAutoCommand PIDTest = new DriveTrainPIDAutoCommand(drive_subsystem, 1, 1);
 
         // DO NOT RUN, just an example for programmers
 
         
                 // drives backward for .2 seconds then stops for .5
         addCommands(
-            shootHigh1,
-            new ParallelCommandGroup(
-                index,
-                shootHigh2),
-            drive1,
-            drive2,
-            intake,
-            turn1
+            PIDTest
         );
     }
 }
-                // drive2.withTimeout(0.5),
-                // waits (doesn' t do anything) for 1 second
-                // new WaitCommand(1),
-                // drives for another second
-                // drive1.withTimeout(1),
-                // turn1.withTimeout(4),
-                // does 2 commands at the same time, in this case do not run because it is doing
-                // it on the same motors
-                // new ParallelCommandGroup(
-                        // drive2).withTimeout(4)
-
-//         );
-//     }
-//     // Use addRequirements() here to declare subsystem dependencies.
-// }

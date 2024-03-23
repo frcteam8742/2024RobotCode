@@ -31,75 +31,56 @@ public class AutoDriveForwardDualNote extends SequentialCommandGroup {
         _IntakeSubsystem = intake_Subsystem;
         _GyroSubsystem = gyro_Subsystem;
 
-        // Look in example for context why this is the way it is,
-        // the commands in order of when they happen
+        // Update notes from Win 10 laptop
 
-        // Step 0
+        // Step : Drives backwards to optimal shooting position from straight on
+        DriveTrainAutoCommand backwards1 = new DriveTrainAutoCommand(drive_Subsystem, -.5, .3);
+        // Step : Does nothing, step can possibly be removed
+        DriveTrainAutoCommand doNothing1 = new DriveTrainAutoCommand(drive_Subsystem, 0, .3);
+        // Step : Shoots note
         ShooterAutoCommand shootHigh1 = new ShooterAutoCommand(shooter_Subsystem, 1);
-        DriveTrainAutoCommand backwards1 = new DriveTrainAutoCommand(drive_Subsystem, -.5, .75);
-        // Step 1
-        ShooterAutoCommand shootHigh2 = new ShooterAutoCommand(shooter_Subsystem, 1);
         IndexerAutoCommand indexHigh1 = new IndexerAutoCommand(indexer_Subsystem, 1);
-        // Step 2
-        DriveTrainAutoCommand backwards2 = new DriveTrainAutoCommand(drive_Subsystem, -.5, 1);
-        IntakeAutoCommand intake1 = new IntakeAutoCommand(intake_Subsystem, 1);
-        IndexerAutoCommand indexer6 = new IndexerAutoCommand(indexer_Subsystem, 1);
-        // Step 2.5
+        // Step : Drives backward toward 2nd note and picks it up, placing it into the shooter
+        DriveTrainAutoCommand backwards2 = new DriveTrainAutoCommand(drive_Subsystem, -.5, .9);
+        IntakeAutoCommand intake1 = new IntakeAutoCommand(intake_Subsystem, 2);
+        IndexerAutoCommand indexer1 = new IndexerAutoCommand(indexer_Subsystem, 2, -.3); // LOOK
+        //Step : Stop to grab it
         IntakeAutoCommand intake2 = new IntakeAutoCommand(intake_Subsystem, 1);
-        IndexerAutoCommand indexer9 = new IndexerAutoCommand(indexer_Subsystem, 1, -.3);
-        // Step 3
-        IntakeAutoCommand intake3 = new IntakeAutoCommand(intake_Subsystem, 1);
-        IndexerAutoCommand indexer8 = new IndexerAutoCommand(indexer_Subsystem, .5, -.3);
-        DriveTrainAutoCommand forward2 = new DriveTrainAutoCommand(drive_Subsystem, .5, .5);
-        ShooterAutoCommand shootHigh4 = new ShooterAutoCommand(shooter_Subsystem, 1);
-        // Step 5
-        DriveTrainAutoCommand forward3 = new DriveTrainAutoCommand(drive_Subsystem, .5, .7); // .3
-        ShooterAutoCommand shootHigh5 = new ShooterAutoCommand(shooter_Subsystem, .3);
-        // Step 6
-        ShooterAutoCommand shootHigh3 = new ShooterAutoCommand(shooter_Subsystem, .35);
-        IndexerAutoCommand indexer2 = new IndexerAutoCommand(indexer_Subsystem, 0, -.5);
-        // Step Whatever
-        // DriveTrainAutoTurnCommand turn1 = new DriveTrainAutoTurnCommand(drive_Subsystem, gyro_Subsystem, 0);
-        // Step 7
-        DriveTrainAutoCommand backwards4 = new DriveTrainAutoCommand(drive_Subsystem, -.5, .1); // 2
-        //Step yadada
-        IndexerAutoCommand indexHigh2 = new IndexerAutoCommand(indexer_Subsystem, 1);
-        ShooterAutoCommand shootHigh6 = new ShooterAutoCommand(shooter_Subsystem, 1);
-        // Step 8
-        // DriveTrainAutoTurnCommand turn2 = new DriveTrainAutoTurnCommand(drive_Subsystem, gyro_Subsystem, 0);
-
-        //Last one
-        DriveTrainAutoCommand backwards3 = new DriveTrainAutoCommand(drive_Subsystem, -.5, 1); // 2
+        IndexerAutoCommand indexer2 = new IndexerAutoCommand(indexer_Subsystem, 1, -.1); // LOOK
+        // Step : Drives forward toward the speaker covering most of the distance quickly
+        DriveTrainAutoCommand forwards1 = new DriveTrainAutoCommand(drive_Subsystem, .5, 1);
+        // Step : Drives forward at a slower pace
+        DriveTrainAutoCommand forwards2 = new DriveTrainAutoCommand(drive_Subsystem, .2, .75); // LOOK
+        // Step : Drives backwards to our best shooting distance
+        DriveTrainAutoCommand backwards3 = new DriveTrainAutoCommand(drive_Subsystem, -.5, .3);
+        // Step : Shoots note
+        ShooterAutoCommand shootHigh2 = new ShooterAutoCommand(shooter_Subsystem, .75);
+        IndexerAutoCommand indexHigh2 = new IndexerAutoCommand(indexer_Subsystem, .75);
+        // Step : Drives out of zone
+        DriveTrainAutoCommand backwards4 = new DriveTrainAutoCommand(drive_Subsystem, -.5, 1.1);
 
         addCommands(
+                backwards1,
+                doNothing1,
                 new ParallelCommandGroup(
-                        backwards1,
-                        shootHigh1),
+                        shootHigh1,
+                        indexHigh1),
                 new ParallelCommandGroup(
-                        indexHigh1,
-                        shootHigh2),
-                new ParallelCommandGroup(
-                        backwards2,
                         intake1,
-                        indexer6
-                        ),
+                        indexer1,
+                        backwards2),
                 new ParallelCommandGroup(
-                        indexer9,
-                        intake2),
+                        intake2,
+                        indexer2
+                ),
+                forwards1,
+                forwards2,
+                backwards3,
                 new ParallelCommandGroup(
-                        forward2,
-                        // intake3
-                        indexer8),
-                        forward3,
-                // new ParallelCommandGroup(
-                //         indexer2
-                //         ),
-                // turn1,
-                backwards4,
-                new ParallelCommandGroup(
-                        indexHigh2,
-                        shootHigh6),
-                        // turn2,
-                backwards3);
+                        shootHigh2,
+                        indexHigh2),
+                backwards4
+        );
+
     }
 }

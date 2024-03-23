@@ -38,6 +38,7 @@ public class IndexerAutoCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        System.out.println("started Indexer");
         _Indexer.autoPower(0);
          if(_Timer.get() > 1){
             _Timer.reset();
