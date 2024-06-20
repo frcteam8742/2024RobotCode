@@ -34,7 +34,8 @@ public class ShooterTeleopCommand extends Command {
             _Shooter.high();
         } else if (_Xbox.getXButton()) { //else if (_Xbox.getBButton()) 
             _Shooter.low();
-        } else if (_Xbox.getRawButton(7)){
+        // } else if (_Xbox.getRawButton(7)){
+        } else {
             _Shooter.off();
         }
     }

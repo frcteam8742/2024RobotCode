@@ -44,6 +44,8 @@ public class Robot extends TimedRobot {
     // Sensors
     DigitalInput _BeamBreakSensor = new DigitalInput(Constants.Sensors.BeamBreakLimitSwitch);
 
+
+
     // HIDS
     Joystick _LeftDriveFlightJoystick = new Joystick(Constants.Operator.LeftFlightStickControllerPort);
     Joystick _RightDriveFlightJoystick = new Joystick(Constants.Operator.RightFlightStickControllerPort);

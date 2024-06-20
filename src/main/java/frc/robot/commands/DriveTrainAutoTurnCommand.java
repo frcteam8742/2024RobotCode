@@ -21,6 +21,7 @@ public class DriveTrainAutoTurnCommand extends Command {
     // private double _tolerance;
     private double _DeltaAngle;
 
+
     public DriveTrainAutoTurnCommand(DriveTrainSubsystem drive, GyroSubsystem gyro, double angle) {
         // Use addRequirements() here to declare subsystem dependencies.
         _Drive = drive;
@@ -34,6 +35,7 @@ public class DriveTrainAutoTurnCommand extends Command {
     @Override
     public void initialize() {
         // initialize motors as off
+        _currentAngle = 0;
         _Drive.setRightPower(0);
         _Drive.setLeftPower(0);
         // _tolerance = Constants.DriveTrain.Tolerance;
@@ -58,8 +60,8 @@ public class DriveTrainAutoTurnCommand extends Command {
             _Drive.setRightPower(.6);
         } else if (deltaAngle > 0) {
             System.out.println("turning LEFT");
-            _Drive.setLeftPower(.5);
-            _Drive.setRightPower(-.5);
+            _Drive.setLeftPower(.6);
+            _Drive.setRightPower(-.6);
             // _Drive.setLeftPower(-.001*(Math.abs(deltaAngle)));
             // _Drive.setRightPower(.001*(Math.abs(deltaAngle)));
         }

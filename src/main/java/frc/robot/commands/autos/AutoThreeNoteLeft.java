@@ -57,7 +57,7 @@ public class AutoThreeNoteLeft extends SequentialCommandGroup {
         ShooterAutoCommand shootHigh2 = new ShooterAutoCommand(shooter_Subsystem, .75);
         IndexerAutoCommand indexHigh2 = new IndexerAutoCommand(indexer_Subsystem, .75);
         // Step : Turns to angle
-        DriveTrainAutoTurnCommand turnToNote2 = new DriveTrainAutoTurnCommand(drive_Subsystem, gyro_Subsystem, 35); // 320 //35
+        DriveTrainAutoTurnCommand turnToNote2 = new DriveTrainAutoTurnCommand(drive_Subsystem, gyro_Subsystem, 40); // 320 //35
 
         // Step : Backs up and Noms it
         DriveTrainAutoCommand backwards4 = new DriveTrainAutoCommand(drive_Subsystem, -.5, 1.4);
